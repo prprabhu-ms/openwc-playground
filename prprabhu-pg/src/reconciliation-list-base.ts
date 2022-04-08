@@ -17,6 +17,15 @@ export class PrprabhuReconciliationListBase extends LitElement {
   }
 
   protected _reorder() {
-    this.labels = [this.labels[1], this.labels[0]];
+    const labels = this.labels.slice(1);
+    labels.push(this.labels[0]);
+    this.labels = labels;
+  }
+
+  protected _appendCounter() {
+    const nextLabel = String.fromCharCode(
+      Math.max(...this.labels.map(el => el.charCodeAt(0))) + 1
+    );
+    this.labels = [...this.labels, nextLabel];
   }
 }

@@ -12,6 +12,7 @@ export const div = css`
 
 export const button = css`
   button {
+    margin: 0.5rem;
     cursor: pointer;
     width: 100%;
     justify-content: center;

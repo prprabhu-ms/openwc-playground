@@ -13,6 +13,7 @@ export class PrprabhuReconciliationListNoKeys extends PrprabhuReconciliationList
         </p>
         ${this.labels.map(() => html`<prprabhu-counter></prprabhu-counter>`)}
         <button @click=${this._reorder}>Reorder</button>
+        <button @click=${this._appendCounter}>Append Counter</button>
       </div>
     `;
   }

@@ -18,6 +18,7 @@ export class PrprabhuReconciliationListKeys extends PrprabhuReconciliationListBa
           label => html`<prprabhu-counter label="${label}"></prprabhu-counter>`
         )}
         <button @click=${this._reorder}>Reorder</button>
+        <button @click=${this._appendCounter}>Append Counter</button>
       </div>
     `;
   }
