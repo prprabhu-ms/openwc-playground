@@ -1,24 +1,10 @@
-import { html, css, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-import { state } from 'lit/decorators/state.js';
 import { repeat } from 'lit/directives/repeat.js';
-import * as styles from './styles.js';
+import { PrprabhuReconciliationListBase } from './reconciliation-list-base.js';
 
 @customElement('prprabhu-reconciliation-list-keys')
-export class PrprabhuReconciliationListKeys extends LitElement {
-  @state()
-  private labels = ['a', 'b'];
-
-  static get styles() {
-    return css`
-      ${styles.div}
-      ${styles.button}
-        div {
-        max-width: 30rem;
-      }
-    `;
-  }
-
+export class PrprabhuReconciliationListKeys extends PrprabhuReconciliationListBase {
   render() {
     return html`
       <div>
@@ -34,9 +20,5 @@ export class PrprabhuReconciliationListKeys extends LitElement {
         <button @click=${this._reorder}>Reorder</button>
       </div>
     `;
-  }
-
-  private _reorder() {
-    this.labels = [this.labels[1], this.labels[0]];
   }
 }
