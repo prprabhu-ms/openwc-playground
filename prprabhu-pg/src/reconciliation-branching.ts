@@ -26,7 +26,7 @@ export class PrprabhuReconciliationBranching extends LitElement {
       <div>
         <p>
           This example shows how two distinct locations in source code (i.e. two
-          distinct html template strings create DOM elements.
+          distinct html template strings) create DOM elements.
         </p>
         ${counter}
         <button @click=${this._toggleLabel}>Switch counter</button>
