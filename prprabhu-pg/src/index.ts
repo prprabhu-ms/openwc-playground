@@ -4,3 +4,7 @@ export { PrprabhuReconciliationBranching } from './reconciliation-branching.js';
 export { PrprabhuReconciliationListNoKeys } from './reconciliation-list-no-keys.js';
 export { PrprabhuReconciliationListControlledAttrib } from './reconciliation-list-controlled-attrib.js';
 export { PrprabhuReconciliationListKeys } from './reconciliation-list-keys.js';
+export { PrprabhuRenderCounter } from './render-counter.js';
+export { PrprabhuRenderFlatten } from './render-flatten.js';
+export { PrprabhuRenderContainer } from './render-container.js';
+export type { DeepLabel } from './render-flatten.js';
