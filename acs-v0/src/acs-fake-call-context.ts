@@ -29,12 +29,7 @@ export class AcsFakeCallAdapter extends FakeCallAdapter {
   }
 }
 
-const globalAdapter = new AcsFakeCallAdapter();
-
 export const findAcsCallAdapter = (leaf: HTMLElement): AcsFakeCallAdapter => {
-  return globalAdapter;
-
-  /* eslint-disable no-unreachable */
   let root: any = leaf;
   while (root) {
     if (root.xkcdAdapter) {
