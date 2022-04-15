@@ -7,6 +7,7 @@ import {
   observable,
 } from '@microsoft/fast-element';
 import {
+  AcsMicrophoneButtonAdapter,
   AcsMicrophoneState,
   findMicrophoneButtonAdapter,
   microphoneButtonSelector,
@@ -29,6 +30,8 @@ const template = html<AcsMicrophoneButton>`
 
 @customElement({ name: 'acs-microphone-button', template })
 export class AcsMicrophoneButton extends FASTElement {
+  private adapter?: AcsMicrophoneButtonAdapter;
+
   strings = {
     onLabel: 'mute',
     offLabel: 'unmute',
@@ -40,7 +43,8 @@ export class AcsMicrophoneButton extends FASTElement {
 
   override connectedCallback(): void {
     super.connectedCallback && super.connectedCallback();
-    findMicrophoneButtonAdapter().registerStateChangeCallback(
+    this.adapter = findMicrophoneButtonAdapter(this);
+    this.adapter.registerStateChangeCallback(
       this.onStateChange.bind(this),
       microphoneButtonSelector
     );
@@ -48,10 +52,11 @@ export class AcsMicrophoneButton extends FASTElement {
 
   override disconnectedCallback(): void {
     super.disconnectedCallback && super.disconnectedCallback();
-    findMicrophoneButtonAdapter().unregisterStateChangeCallback(
+    this.adapter?.unregisterStateChangeCallback(
       this.onStateChange.bind(this),
       microphoneButtonSelector
     );
+    this.adapter = undefined;
   }
 
   onStateChange(newState: AcsMicrophoneState) {
@@ -59,9 +64,10 @@ export class AcsMicrophoneButton extends FASTElement {
   }
 
   onClick() {
-    this.state = {
-      ...this.state,
-      checked: !this.state.checked,
-    };
+    if (this.state.checked) {
+      this.adapter?.unmute();
+    } else {
+      this.adapter?.mute();
+    }
   }
 }

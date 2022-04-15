@@ -2,8 +2,9 @@ import { CallAdapterState } from '@azure/communication-react';
 import * as reselect from 'reselect';
 import { findAcsCallAdapter } from './acs-fake-call-context.js';
 
-export const findMicrophoneButtonAdapter = (): AcsMicrophoneButtonAdapter =>
-  findAcsCallAdapter();
+export const findMicrophoneButtonAdapter = (
+  leaf: HTMLElement
+): AcsMicrophoneButtonAdapter => findAcsCallAdapter(leaf);
 
 export interface AcsMicrophoneState {
   checked: boolean;
