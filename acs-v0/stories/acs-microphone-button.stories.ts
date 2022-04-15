@@ -5,16 +5,11 @@ import '../src/acs-microphone-button.js';
 export default {
   title: 'AcsMicrophoneButton',
   component: 'acs-microphone-button',
-  argTypes: {
-    checked: {
-      control: 'boolean',
-    },
-  },
+  argTypes: {},
 };
 
-const Template = (args: { checked: boolean }) =>
-  html`<acs-microphone-button
-    ?checked=${args.checked}
-  ></acs-microphone-button>`;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Template = (args: unknown) =>
+  html`<acs-microphone-button></acs-microphone-button>`;
 
 export const Regular = Template.bind({});

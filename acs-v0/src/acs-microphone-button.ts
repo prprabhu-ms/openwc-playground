@@ -1,9 +1,9 @@
 import {
   FASTElement,
   customElement,
-  attr,
   html,
   when,
+  observable,
 } from '@microsoft/fast-element';
 
 const uncheckedSlot = html<AcsMicrophoneButton>`
@@ -15,7 +15,7 @@ const checkedSlot = html<AcsMicrophoneButton>`
 `;
 
 const template = html<AcsMicrophoneButton>`
-  <fast-button>
+  <fast-button @click=${x => x.onClick()}>
     ${when(x => !x.checked, uncheckedSlot)} ${when(x => x.checked, checkedSlot)}
   </fast-button>
 `;
@@ -27,5 +27,9 @@ export class AcsMicrophoneButton extends FASTElement {
     offLabel: 'unmute',
   };
 
-  @attr({ mode: 'boolean' }) checked: boolean = false;
+  @observable checked: boolean = false;
+
+  onClick() {
+    this.checked = !this.checked;
+  }
 }
