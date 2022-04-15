@@ -3,6 +3,6 @@ import {
   provideFASTDesignSystem,
 } from '@microsoft/fast-components';
 
-export { AcsMuteButton } from './acs-mute-button.js';
+export { AcsMicrophoneButton } from './acs-microphone-button.js';
 
 provideFASTDesignSystem().register(fastButton());
