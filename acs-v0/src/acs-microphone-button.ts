@@ -6,50 +6,12 @@ import {
   when,
   observable,
 } from '@microsoft/fast-element';
+import {
+  AcsMicrophoneState,
+  FakeMicrophoneButtonAdapter,
+} from './MicrophoneButtonAdapter.js';
 
-export interface AcsMicrophoneState {
-  checked: boolean;
-}
-
-export interface AcsMicrophoneButtonAdapter {
-  onToggleMicrophone(): Promise<void>;
-  registerStateChangeHandler(
-    handler: (newState: AcsMicrophoneState) => void
-  ): void;
-  unregisterStateChangeHandler(
-    handler: (newState: AcsMicrophoneState) => void
-  ): void;
-}
-
-class TestAdapter implements AcsMicrophoneButtonAdapter {
-  private handler?: (newState: AcsMicrophoneState) => void;
-
-  private state: AcsMicrophoneState = {
-    checked: false,
-  };
-
-  async onToggleMicrophone(): Promise<void> {
-    this.state = {
-      ...this.state,
-      checked: !this.state.checked,
-    };
-    this.handler && this.handler(this.state);
-  }
-
-  registerStateChangeHandler(
-    handler: (newState: AcsMicrophoneState) => void
-  ): void {
-    this.handler = handler;
-  }
-
-  unregisterStateChangeHandler(
-    handler: (newState: AcsMicrophoneState) => void
-  ): void {
-    this.handler = handler;
-  }
-}
-
-const globalAdapter = new TestAdapter();
+const globalAdapter = new FakeMicrophoneButtonAdapter();
 
 const uncheckedSlot = html<AcsMicrophoneButton>`
   <slot> ${x => x.strings.onLabel} </slot>
