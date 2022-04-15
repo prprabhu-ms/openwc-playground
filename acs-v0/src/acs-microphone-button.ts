@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import {
   FASTElement,
   customElement,
@@ -5,6 +6,50 @@ import {
   when,
   observable,
 } from '@microsoft/fast-element';
+
+export interface AcsMicrophoneState {
+  checked: boolean;
+}
+
+export interface AcsMicrophoneButtonAdapter {
+  onToggleMicrophone(): Promise<void>;
+  registerStateChangeHandler(
+    handler: (newState: AcsMicrophoneState) => void
+  ): void;
+  unregisterStateChangeHandler(
+    handler: (newState: AcsMicrophoneState) => void
+  ): void;
+}
+
+class TestAdapter implements AcsMicrophoneButtonAdapter {
+  private handler?: (newState: AcsMicrophoneState) => void;
+
+  private state: AcsMicrophoneState = {
+    checked: false,
+  };
+
+  async onToggleMicrophone(): Promise<void> {
+    this.state = {
+      ...this.state,
+      checked: !this.state.checked,
+    };
+    this.handler && this.handler(this.state);
+  }
+
+  registerStateChangeHandler(
+    handler: (newState: AcsMicrophoneState) => void
+  ): void {
+    this.handler = handler;
+  }
+
+  unregisterStateChangeHandler(
+    handler: (newState: AcsMicrophoneState) => void
+  ): void {
+    this.handler = handler;
+  }
+}
+
+const globalAdapter = new TestAdapter();
 
 const uncheckedSlot = html<AcsMicrophoneButton>`
   <slot> ${x => x.strings.onLabel} </slot>
@@ -16,7 +61,8 @@ const checkedSlot = html<AcsMicrophoneButton>`
 
 const template = html<AcsMicrophoneButton>`
   <fast-button @click=${x => x.onClick()}>
-    ${when(x => !x.checked, uncheckedSlot)} ${when(x => x.checked, checkedSlot)}
+    ${when(x => !x.state.checked, uncheckedSlot)}
+    ${when(x => x.state.checked, checkedSlot)}
   </fast-button>
 `;
 
@@ -27,9 +73,28 @@ export class AcsMicrophoneButton extends FASTElement {
     offLabel: 'unmute',
   };
 
-  @observable checked: boolean = false;
+  @observable state: AcsMicrophoneState = {
+    checked: false,
+  };
+
+  override connectedCallback(): void {
+    super.connectedCallback && super.connectedCallback();
+    globalAdapter.registerStateChangeHandler(this.onStateChange.bind(this));
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback && super.disconnectedCallback();
+    globalAdapter.unregisterStateChangeHandler(this.onStateChange.bind(this));
+  }
+
+  onStateChange(newState: AcsMicrophoneState) {
+    this.state = newState;
+  }
 
   onClick() {
-    this.checked = !this.checked;
+    this.state = {
+      ...this.state,
+      checked: !this.state.checked,
+    };
   }
 }
