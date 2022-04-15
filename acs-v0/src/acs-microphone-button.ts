@@ -8,10 +8,9 @@ import {
 } from '@microsoft/fast-element';
 import {
   AcsMicrophoneState,
-  FakeMicrophoneButtonAdapter,
+  findMicrophoneButtonAdapter,
+  microphoneButtonSelector,
 } from './MicrophoneButtonAdapter.js';
-
-const globalAdapter = new FakeMicrophoneButtonAdapter();
 
 const uncheckedSlot = html<AcsMicrophoneButton>`
   <slot> ${x => x.strings.onLabel} </slot>
@@ -41,12 +40,18 @@ export class AcsMicrophoneButton extends FASTElement {
 
   override connectedCallback(): void {
     super.connectedCallback && super.connectedCallback();
-    globalAdapter.registerStateChangeHandler(this.onStateChange.bind(this));
+    findMicrophoneButtonAdapter().registerStateChangeCallback(
+      this.onStateChange.bind(this),
+      microphoneButtonSelector
+    );
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback && super.disconnectedCallback();
-    globalAdapter.unregisterStateChangeHandler(this.onStateChange.bind(this));
+    findMicrophoneButtonAdapter().unregisterStateChangeCallback(
+      this.onStateChange.bind(this),
+      microphoneButtonSelector
+    );
   }
 
   onStateChange(newState: AcsMicrophoneState) {

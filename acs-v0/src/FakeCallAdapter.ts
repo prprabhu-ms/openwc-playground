@@ -70,7 +70,8 @@ export class FakeCallAdapter implements CallAdapter {
       candidate => candidate === handler
     );
     if (toRemove === -1) {
-      console.exception('Found none to remove. My handler logic is broken!');
+      // eslint-disable-next-line no-console
+      console.error('Found none to remove. My handler logic is broken!');
       return;
     }
     this.handlers = this.handlers.splice(toRemove, 1);

@@ -1,6 +1,9 @@
 import { CallAdapterState } from '@azure/communication-react';
 import * as reselect from 'reselect';
-import { FakeCallAdapter } from './FakeCallAdapter.js';
+import { findAcsCallAdapter } from './acs-fake-call-context.js';
+
+export const findMicrophoneButtonAdapter = (): AcsMicrophoneButtonAdapter =>
+  findAcsCallAdapter();
 
 export interface AcsMicrophoneState {
   checked: boolean;
@@ -9,33 +12,14 @@ export interface AcsMicrophoneState {
 export interface AcsMicrophoneButtonAdapter {
   mute(): Promise<void>;
   unmute(): Promise<void>;
-  registerStateChangeHandler(
-    handler: (newState: AcsMicrophoneState) => void
+  registerStateChangeCallback(
+    callback: (newState: AcsMicrophoneState) => void,
+    selector: MicrophoneButtonSelector
   ): void;
-  unregisterStateChangeHandler(
-    handler: (newState: AcsMicrophoneState) => void
+  unregisterStateChangeCallback(
+    callback: (newState: AcsMicrophoneState) => void,
+    selector: MicrophoneButtonSelector
   ): void;
-}
-
-export class FakeMicrophoneButtonAdapter
-  extends FakeCallAdapter
-  implements AcsMicrophoneButtonAdapter
-{
-  registerStateChangeHandler(
-    handler: (newState: AcsMicrophoneState) => void
-  ): void {
-    this.onStateChange(state => {
-      handler(microphoneButtonSelector(state));
-    });
-  }
-
-  unregisterStateChangeHandler(
-    handler: (newState: AcsMicrophoneState) => void
-  ): void {
-    this.offStateChange(state => {
-      handler(microphoneButtonSelector(state));
-    });
-  }
 }
 
 declare type MicrophoneButtonSelector = (
@@ -46,7 +30,6 @@ const getCallExists = (state: CallAdapterState): boolean => !!state.call;
 const getIsMuted = (state: CallAdapterState): boolean | undefined =>
   state.call?.isMuted;
 
-// Copy-pasta from unexported impl in ui lib:
 export const microphoneButtonSelector: MicrophoneButtonSelector =
   reselect.createSelector(
     [getCallExists, getIsMuted],
