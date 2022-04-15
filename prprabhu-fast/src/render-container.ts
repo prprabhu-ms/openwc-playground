@@ -1,22 +1,28 @@
-import { FASTElement, customElement, attr, html } from '@microsoft/fast-element';
+import {
+  FASTElement,
+  customElement,
+  attr,
+  html,
+} from '@microsoft/fast-element';
 import { commonStyles } from './styles.js';
 import { DeepLabel } from './render-flatten.js';
 
-
 const template = html<PrprabhuRenderContainer>`
-<div>
+  <div>
     <prprabhu-render-flatten :label=${x => x.label}></prprabhu-render-flatten>
-    <button @click=${x=> x.forceRender()}>Trigger Render</button>
-</div>
+    <button @click=${x => x.forceRender()}>Trigger Render</button>
+  </div>
 `;
 
-
-@customElement({ name: 'prprabhu-render-container', template, styles: commonStyles })
+@customElement({
+  name: 'prprabhu-render-container',
+  template,
+  styles: commonStyles,
+})
 export class PrprabhuRenderContainer extends FASTElement {
-    @attr label: DeepLabel = { label: 'BLAH' };
+  @attr label: DeepLabel = { label: 'BLAH' };
 
-    forceRender() {
-        console.log('Forcing a render');
-        this.label = { ...this.label };
-    }
+  forceRender() {
+    this.label = { ...this.label };
+  }
 }
