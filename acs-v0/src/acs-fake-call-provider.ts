@@ -4,12 +4,12 @@ import { FakeCallAdapter } from './FakeCallAdapter.js';
 
 const template = html`<slot></slot>`;
 
-@customElement({ name: 'acs-fake-call-context', template })
-export class AcsMicrophoneButton extends FASTElement {
-  public xkcdAdapter = new AcsFakeCallAdapter();
+@customElement({ name: 'acs-fake-call-provider', template })
+export class AcsFakeCallProvider extends FASTElement {
+  public xkcdAcsContext = new AcsFakeCallContext();
 }
 
-export class AcsFakeCallAdapter extends FakeCallAdapter {
+export class AcsFakeCallContext extends FakeCallAdapter {
   registerStateChangeCallback<StateT>(
     callback: (newState: StateT) => void,
     selector: (state: CallAdapterState) => StateT
@@ -29,11 +29,11 @@ export class AcsFakeCallAdapter extends FakeCallAdapter {
   }
 }
 
-export const findAcsCallAdapter = (leaf: HTMLElement): AcsFakeCallAdapter => {
+export const findAcsCallContext = (leaf: HTMLElement): AcsFakeCallContext => {
   let root: any = leaf;
   while (root) {
-    if (root.xkcdAdapter) {
-      return root.xkcdAdapter as AcsFakeCallAdapter;
+    if (root.xkcdAcsContext) {
+      return root.xkcdAcsContext as AcsFakeCallContext;
     }
     root = root.parentElement;
   }
