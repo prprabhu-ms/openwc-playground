@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en-GB">
+
 <head>
   <meta charset="utf-8">
   <style>
@@ -8,10 +9,30 @@
     }
   </style>
 </head>
+
 <body>
+  <div style="height: 30rem; width: 40rem">
+    <div id="call-composite" style="height: 100%; width: 100%"></div>
+  </div>
   <div id="demo"></div>
 
+  <script fetchpriority="high"
+    src="https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js"></script>
   <script type="module">
+
+    const USER_ID = 'PLACEHOLDER';
+    const TOKEN = 'PLACEHOLDER';
+
+    const callAdapter = await callComposite.loadCallComposite(
+      {
+        groupId: '85057ec2-b9db-4099-8c2f-e9fddbf4593f',
+        displayName: 'ThereAreSoManyMe',
+        userId: { communicationUserId: USER_ID },
+        token: TOKEN,
+      },
+      document.querySelector('#call-composite')
+    );
+
     import { html, render } from 'lit';
     import '../dist/src/index.js';
 
@@ -26,4 +47,5 @@
     );
   </script>
 </body>
+
 </html>
