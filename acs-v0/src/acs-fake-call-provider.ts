@@ -1,15 +1,22 @@
 import { CallAdapterState } from '@azure/communication-react';
 import { customElement, FASTElement, html } from '@microsoft/fast-element';
+import { AcsCallContext, AcsCallProvider } from './AcsCallProvider.js';
 import { FakeCallAdapter } from './FakeCallAdapter.js';
 
 const template = html`<slot></slot>`;
 
 @customElement({ name: 'acs-fake-call-provider', template })
-export class AcsFakeCallProvider extends FASTElement {
+export class AcsFakeCallProvider
+  extends FASTElement
+  implements AcsCallProvider
+{
   public xkcdAcsContext = new AcsFakeCallContext();
 }
 
-export class AcsFakeCallContext extends FakeCallAdapter {
+export class AcsFakeCallContext
+  extends FakeCallAdapter
+  implements AcsCallContext
+{
   registerStateChangeCallback<StateT>(
     callback: (newState: StateT) => void,
     selector: (state: CallAdapterState) => StateT
@@ -28,14 +35,3 @@ export class AcsFakeCallContext extends FakeCallAdapter {
     });
   }
 }
-
-export const findAcsCallContext = (leaf: HTMLElement): AcsFakeCallContext => {
-  let root: any = leaf;
-  while (root) {
-    if (root.xkcdAcsContext) {
-      return root.xkcdAcsContext as AcsFakeCallContext;
-    }
-    root = root.parentElement;
-  }
-  throw new Error('Failed to file acs-fake-call-context ancestor');
-};
