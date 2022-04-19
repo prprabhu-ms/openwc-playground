@@ -3,7 +3,7 @@ import { CallAdapter, CallAdapterState } from '@azure/communication-react';
 export interface AcsCallProvider {
   // TODO: `findAcsCallContext` looks for this public property in all ancestor HTMLElement nodes of
   // a component. This is clearly a bad idea. Find a better idea.
-  xkcdAcsContext: AcsCallContext;
+  xkcdAcsContext?: AcsCallContext;
 }
 
 export interface AcsCallContext extends CallAdapter {

@@ -35,6 +35,6 @@ export const microphoneButtonSelector: MicrophoneButtonSelector =
   reselect.createSelector(
     [getCallExists, getIsMuted],
     (callExists, isMuted) => ({
-      checked: callExists ? !isMuted : false,
+      checked: callExists ? !!isMuted : false,
     })
   );

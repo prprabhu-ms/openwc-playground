@@ -16,13 +16,25 @@
   </div>
   <div id="demo"></div>
 
+  <template id="demo-template">
+    <acs-real-call-provider>
+      <acs-microphone-button></acs-microphone-button>
+    </acs-real-call-provider>
+  </template>
+
   <script fetchpriority="high"
     src="https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js"></script>
   <script type="module">
 
+
+    // Import all web component defs.
+    import '../dist/esbuild/index.js';
+
     const USER_ID = 'PLACEHOLDER';
     const TOKEN = 'PLACEHOLDER';
 
+    // `callComposite` is defined by the cjs module from communication-ui-library.
+    // eslint-disable-next-line no-undef
     const callAdapter = await callComposite.loadCallComposite(
       {
         groupId: '85057ec2-b9db-4099-8c2f-e9fddbf4593f',
@@ -33,16 +45,12 @@
       document.querySelector('#call-composite')
     );
 
-    import { html, render } from 'lit';
-    import '../dist/esbuild/index.js';
-    render(
-      html`
-    <acs-fake-call-provider>
-      <acs-microphone-button></acs-microphone-button>
-    </acs-fake-call-provider>
-      `,
-      document.querySelector('#demo')
-    );
+    const clone = document.querySelector('#demo-template').content.cloneNode(true);
+    document.querySelector('#demo').appendChild(clone);
+
+    // Can only find the tag after it's been added to the main DOM.
+    const provider = document.querySelector('acs-real-call-provider');
+    provider.adapter = callAdapter;
   </script>
 </body>
 
