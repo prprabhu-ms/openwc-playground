@@ -1,7 +1,5 @@
 import { html } from 'lit';
-import '../src/index.js';
-import '../src/acs-microphone-button.js';
-import '../src/acs-fake-call-provider.js';
+import '../esbuild/index.js';
 
 export default {
   title: 'AcsMicrophoneButton',
