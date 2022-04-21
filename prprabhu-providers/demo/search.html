@@ -18,52 +18,54 @@
   This element is unwrapped by a provider.
   <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
 
-  <prprabhu-providers-search>
+  <prprabhu-providers-search id="p1">
     This element is wrapped by a provider that has no context.
-    <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+    <prprabhu-providers-search-hello id="h1"></prprabhu-providers-search-hello>
   </prprabhu-providers-search>
 
-  <prprabhu-providers-search world="Uranus">
+  <prprabhu-providers-search id="p2" world="Uranus">
     This element is wrapped by a provider that has context.
-    <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+    <prprabhu-providers-search-hello id="h2"></prprabhu-providers-search-hello>
   </prprabhu-providers-search>
 
-  <prprabhu-providers-search id="provider-zoo">
+  <prprabhu-providers-search id="p3">
     This element is wrapped by a provider for which the context is set later via JS.
-    <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+    <prprabhu-providers-search-hello id="h3"></prprabhu-providers-search-hello>
   </prprabhu-providers-search>
 
   <script>
-    document.getElementById('provider-zoo').setAttribute("world", "Neptune");
+    document.getElementById('p3').setAttribute("world", "Neptune");
   </script>
 
-  <prprabhu-providers-search world="Jupiter">
+  <prprabhu-providers-search id="p4" world="Jupiter">
     Nested elements with context.
-    <prprabhu-providers-search-hello>
-      <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+    <prprabhu-providers-search-hello id="h4.1">
+      <prprabhu-providers-search-hello id="h4.2"></prprabhu-providers-search-hello>
     </prprabhu-providers-search-hello>
   </prprabhu-providers-search>
 
 
-  <prprabhu-providers-search world="Mercury">
+  <prprabhu-providers-search id="p5" world="Mercury">
     Nested elements with context. Nested through shadow-dom.
-    <prprabhu-providers-search-hello-nested>
-      <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+    <h3>BROKEN</h3>
+    <prprabhu-providers-search-hello-nested id="h5.1">
+      <prprabhu-providers-search-hello id="h5.2"></prprabhu-providers-search-hello>
     </prprabhu-providers-search-hello-nested>
   </prprabhu-providers-search>
 
-  <prprabhu-providers-search world="Pluto">
-    <prprabhu-providers-search world="Earth">
+  <prprabhu-providers-search id="p6.1" world="Pluto">
+    <prprabhu-providers-search id="p6.2" world="Earth">
       Nested providers. Innermost wins!
-      <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+      <prprabhu-providers-search-hello id="h6"></prprabhu-providers-search-hello>
     </prprabhu-providers-search>
   </prprabhu-providers-search>
 
-  <prprabhu-providers-search-questionable world="Venus">
+  <prprabhu-providers-search-questionable id="p7" world="Venus">
     This element is wrapped by an alternative provider.
     Provider polymorphism happens via composition. This is the only way the components can find the "real" provider via
     tagName.
-    <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+    <h3>BROKEN</h3>
+    <prprabhu-providers-search-hello id="h7"></prprabhu-providers-search-hello>
   </prprabhu-providers-search-questionable>
 </body>
 

@@ -69,12 +69,16 @@ export class PrprabhuProvidersSearchAlt extends FASTElement {
 
 export const findProvider = (leaf: HTMLElement): PrprabhuProvidersSearch => {
   let root = leaf.parentNode;
+  const ancestors = [root];
   while (root) {
     if (root.nodeName.toLowerCase() === 'prprabhu-providers-search') {
+      console.log('Ancestor chain:', leaf, ancestors);
       return root as PrprabhuProvidersSearch;
     }
     root = root.parentElement;
+    ancestors.push(root);
   }
+  console.log('Ancestor chain:', leaf, ancestors);
   throw new Error('failed to find a provider');
 };
 
@@ -124,7 +128,7 @@ export class PrprabhuProvidersSearchHello extends FASTElement {
 
 @customElement({
   name: 'prprabhu-providers-search-hello-nested',
-  template: html`<prprabhu-providers-search-hello>
+  template: html`<prprabhu-providers-search-hello id="h.nested">
     <slot></slot>
   </prprabhu-providers-search-hello>`,
   styles: commonStyles,
