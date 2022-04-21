@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #fafafa;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="demo-global-1"></div>
+  <div id="demo-global-2"></div>
+
+  This element is defined in plain HTML, before the custom elements are loaded.
+  <prprabhu-providers-global-hello></prprabhu-providers-global-hello>
+
+  <script type="module">
+    import { html, render } from 'lit';
+    import { Provider } from '../dist/src/prprabhu-providers-global.js';
+
+    render(
+      html`
+        This element defined *before* the Provider is initialized.
+        <prprabhu-providers-global-hello></prprabhu-providers-global-hello>
+      `,
+      document.querySelector('#demo-global-1')
+    );
+
+    Provider.setGlobalInstance({ world: 'Uranus' });
+
+    render(
+      html`
+        This element defined *after* the Provider is initialized.
+        <prprabhu-providers-global-hello></prprabhu-providers-global-hello>
+      `,
+      document.querySelector('#demo-global-2')
+    );
+  </script>
+</body>
+
+</html>
