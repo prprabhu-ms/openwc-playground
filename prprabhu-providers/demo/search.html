@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #fafafa;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module">
+    import '../dist/src/prprabhu-providers-search.js';
+  </script>
+
+  This element is unwrapped by a provider.
+  <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+
+  <prprabhu-providers-search>
+    This element is wrapped by a provider that has no context.
+    <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+  </prprabhu-providers-search>
+
+  <prprabhu-providers-search world="Uranus">
+    This element is wrapped by a provider that has context.
+    <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+  </prprabhu-providers-search>
+
+  <prprabhu-providers-search id="provider-zoo">
+    This element is wrapped by a provider for which the context is set later via JS.
+    <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+  </prprabhu-providers-search>
+
+  <script>
+    document.getElementById('provider-zoo').setAttribute("world", "Neptune");
+  </script>
+
+  <prprabhu-providers-search world="Jupiter">
+    Nested elements with context.
+    <prprabhu-providers-search-hello>
+      <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+    </prprabhu-providers-search-hello>
+  </prprabhu-providers-search>
+
+
+  <prprabhu-providers-search world="Mercury">
+    Nested elements with context. Nested through shadow-dom.
+    <prprabhu-providers-search-hello-nested>
+      <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+    </prprabhu-providers-search-hello-nested>
+  </prprabhu-providers-search>
+
+  <prprabhu-providers-search world="Pluto">
+    <prprabhu-providers-search world="Earth">
+      Nested providers. Innermost wins!
+      <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+    </prprabhu-providers-search>
+  </prprabhu-providers-search>
+
+  <prprabhu-providers-search-questionable world="Venus">
+    This element is wrapped by an alternative provider.
+    Provider polymorphism happens via composition. This is the only way the components can find the "real" provider via
+    tagName.
+    <prprabhu-providers-search-hello></prprabhu-providers-search-hello>
+  </prprabhu-providers-search-questionable>
+</body>
+
+</html>
