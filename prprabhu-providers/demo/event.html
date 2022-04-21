@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #fafafa;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module">
+    import '../dist/src/prprabhu-providers-event.js';
+  </script>
+
+  This element is unwrapped by a provider.
+  <prprabhu-providers-event-hello></prprabhu-providers-event-hello>
+
+  <prprabhu-providers-event id="p1">
+    This element is wrapped by a provider that has no context.
+    <prprabhu-providers-event-hello id="h1"></prprabhu-providers-event-hello>
+  </prprabhu-providers-event>
+
+  <prprabhu-providers-event id="p2" world="Uranus">
+    This element is wrapped by a provider that has context.
+    <prprabhu-providers-event-hello id="h2"></prprabhu-providers-event-hello>
+  </prprabhu-providers-event>
+
+  <prprabhu-providers-event id="p3">
+    This element is wrapped by a provider for which the context is set later via JS.
+    <prprabhu-providers-event-hello id="h3"></prprabhu-providers-event-hello>
+  </prprabhu-providers-event>
+
+  <script>
+    document.getElementById('p3').setAttribute("world", "Neptune");
+  </script>
+
+  <prprabhu-providers-event id="p4" world="Jupiter">
+    Nested elements with context.
+    <prprabhu-providers-event-hello id="h4.1">
+      <prprabhu-providers-event-hello id="h4.2"></prprabhu-providers-event-hello>
+    </prprabhu-providers-event-hello>
+  </prprabhu-providers-event>
+
+
+  <prprabhu-providers-event id="p5" world="Mercury">
+    Nested elements with context. Nested through shadow-dom.
+    <prprabhu-providers-event-hello-nested id="h5.1">
+      <prprabhu-providers-event-hello id="h5.2"></prprabhu-providers-event-hello>
+    </prprabhu-providers-event-hello-nested>
+  </prprabhu-providers-event>
+
+  <prprabhu-providers-event id="p6.1" world="Pluto">
+    <prprabhu-providers-event id="p6.2" world="Earth">
+      Nested providers. Innermost wins!
+      <prprabhu-providers-event-hello id="h6"></prprabhu-providers-event-hello>
+    </prprabhu-providers-event>
+  </prprabhu-providers-event>
+
+  <prprabhu-providers-event-questionable id="p7" world="Venus">
+    This element is wrapped by an alternative provider.
+
+    Providers are defined by their handling of the register/unregister events.
+    So different provider implementations can exist independently.
+
+    <prprabhu-providers-event-hello id="h7"></prprabhu-providers-event-hello>
+  </prprabhu-providers-event-questionable>
+
+  <prprabhu-providers-event-out-of-order id="p8" world="Venus">
+    This element is wrapped by an alternative provider that was <em>defined after the component</em> in source code.
+
+    <h3>Broken</h3>
+    It seems that the event handler isn't registered in time to handle the event fired by the contents.
+
+    <prprabhu-providers-event-hello id="h8"></prprabhu-providers-event-hello>
+  </prprabhu-providers-event-out-of-order>
+
+  <prprabhu-providers-event-late-but-connected id="p8" world="Venus">
+    This element is wrapped by an alternative provider that was <em>defined after the component</em> in source code.
+    In this case, the event listener is added in connectedCallback instead of constructor.
+
+    <h3>Broken</h3>
+    It seems that the event handler isn't registered in time to handle the event fired by the contents.
+    <prprabhu-providers-event-hello id="h8"></prprabhu-providers-event-hello>
+  </prprabhu-providers-event-late-but-connected>
+
+
+  <prprabhu-providers-event-out-of-order id="p8" world="Venus">
+    This element is wrapped by an alternative provider that was <em>defined after the component</em> in source code.
+
+    In this case, the component delays firing the event to allow the provider to be initialized.
+
+    <prprabhu-providers-event-hello-delay-event id="h8"></prprabhu-providers-event-hello-delay-event>
+  </prprabhu-providers-event-out-of-order>
+</body>
+
+</html>
