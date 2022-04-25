@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #fafafa;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  This element is defined in plain HTML, before the custom elements are loaded. Good ol' JavaScript later sets the props. This strategy isn't scalable for all our components.
+  <prprabhu-props-hello id="demo-props-1"></prprabhu-props-hello>
+
+  <div id="demo-props-2"></div>
+  <div id="demo-props-3"></div>
+
+  <script type="module">
+    import { html, render } from 'lit';
+    import '../dist/src/prprabhu-props.js';
+
+    const component = document.querySelector('#demo-props-1');
+    component.nested = {
+      world: 'Earth',
+    };
+
+    render(
+      html`
+        This example sets the FASTElement props using Lit's <code>html</code> helper function. It works, but Contoso is on their own for reactivity.
+        <br/>
+        When the data behind <code>nested</code> changes, they have to figure out how to update props from plain JavaScript. They need <em>some</em> framework for this. We can't provide the
+        equivalent of <code>usePropsFor</code> because we don't control the framework that <em>Contoso</em> uses.
+
+        <prprabhu-props-hello .nested=${{world: 'Neptune'}}></prprabhu-props-hello>
+      `,
+      document.querySelector('#demo-props-2')
+    );
+
+    // Provided by us.
+    class StatefulNestedClient {
+      counter = 0;
+
+      constructor(handler) {
+        setInterval(() => {
+          this.counter += 1;
+          const nested = {
+            world: `world.${this.counter}`,
+          }
+          console.log(`Calling handler with`, nested);
+          handler(nested);
+        }, 3000);
+        handler({world: `world.0`});
+      }
+    }
+
+    // Contoso code without any framework
+
+    // eslint-disable-next-line no-new
+    new StatefulNestedClient((newNested) => {
+      render(
+      html`
+        A very simple example of how reactivity might be implemented.
+        <br/>
+        similar boilerplate or framework support for rerendering will be needed in Contoso code even if they don't want to override any props.
+
+        <prprabhu-props-hello .nested=${newNested}></prprabhu-props-hello>
+      `,
+      document.querySelector('#demo-props-3')
+    );
+    });
+
+
+  </script>
+</body>
+
+</html>
