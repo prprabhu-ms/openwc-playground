@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { customElement, html, when } from '@microsoft/fast-element';
+import { AcsCallContext } from './AcsCallProvider.js';
 import { BaseComponent } from './BaseComponent.js';
 import {
   AcsMicrophoneButtonContext,
@@ -35,6 +36,12 @@ export class AcsMicrophoneButton extends BaseComponent<
 
   override getSelector(): MicrophoneButtonSelector {
     return microphoneButtonSelector;
+  }
+
+  override safeContextCast(
+    context: AcsCallContext
+  ): AcsMicrophoneButtonContext {
+    return context;
   }
 
   onClick() {

@@ -6,19 +6,20 @@ export interface ProviderRegisterEventDetail {
 
 export type ProviderUnregisterEventDetail = ProviderRegisterEventDetail;
 
-interface CustomEventMap {
-  'provider-register': CustomEvent<ProviderRegisterEventDetail>;
-  'provider-unregister': CustomEvent<ProviderUnregisterEventDetail>;
+export interface CustomEventMap {
+  'provider-register': ProviderRegisterEventDetail;
+  'provider-unregister': ProviderUnregisterEventDetail;
 }
+
 declare global {
   interface HTMLElement {
     addEventListener<K extends keyof CustomEventMap>(
       type: K,
-      listener: (this: Document, ev: CustomEventMap[K]) => void
+      listener: (this: Document, ev: CustomEvent<CustomEventMap[K]>) => void
     ): void;
     removeEventListener<K extends keyof CustomEventMap>(
       type: K,
-      listener: (this: Document, ev: CustomEventMap[K]) => void
+      listener: (this: Document, ev: CustomEvent<CustomEventMap[K]>) => void
     ): void;
   }
 }

@@ -10,7 +10,11 @@ import { CallAdapter, CallAdapterState } from '@azure/communication-react';
 import { AcsCallContext } from './AcsCallProvider.js';
 
 export class AcsRealCallContext implements AcsCallContext {
-  constructor(private adapter: CallAdapter) {}
+  private adapter: CallAdapter;
+
+  constructor(adapter: CallAdapter) {
+    this.adapter = adapter;
+  }
 
   registerStateChangeCallback<StateT>(
     callback: (newState: StateT) => void,
@@ -31,7 +35,7 @@ export class AcsRealCallContext implements AcsCallContext {
   }
 
   onStateChange(handler: (state: CallAdapterState) => void): void {
-      this.adapter.onStateChange(handler);
+    this.adapter.onStateChange(handler);
   }
 
   offStateChange(handler: (state: CallAdapterState) => void): void {

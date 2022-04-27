@@ -1,5 +1,7 @@
 import { CallAdapterState } from '@azure/communication-react';
 import { FASTElement, observable } from '@microsoft/fast-element';
+import { AcsCallContext } from './AcsCallProvider.js';
+import { CustomEventMap } from './events.js';
 
 export declare type Selector<State> = (state: CallAdapterState) => State;
 
@@ -27,13 +29,26 @@ export class BaseComponent<
     return this.context;
   }
 
+  // Must be overridden by concrete extensions of this class.
+  //
+  // Provides type safety for the selector.
   protected getSelector(): Selector<State> {
+    throw new Error('Unimplemented');
+  }
+
+  // Must be overridden by concrete extensions of this class.
+  //
+  // Provides type safety for the context.
+  //
+  // Ensures that `Context` only contains handlers that are actually implemented by `AcsCallContext`.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected safeContextCast(context: AcsCallContext): Context {
     throw new Error('Unimplemented');
   }
 
   override connectedCallback(): void {
     super.connectedCallback && super.connectedCallback();
-    this.$emit('provider-register', {
+    this.typedEmit('provider-register', {
       contextChanged: this.contextChanged.bind(this),
     });
   }
@@ -43,7 +58,7 @@ export class BaseComponent<
     // - First unregister from further context updates.
     // - Then unregister from curent context.
     // - Finally invoke super.disconnectedCallback() to continue to unmount.
-    this.$emit('provider-unregister', {
+    this.typedEmit('provider-unregister', {
       contextChanged: this.contextChanged.bind(this),
     });
     this.context?.unregisterStateChangeCallback(
@@ -54,10 +69,10 @@ export class BaseComponent<
     super.disconnectedCallback && super.disconnectedCallback();
   }
 
-  private contextChanged(context?: Context) {
-    this.context = context;
-    if (context) {
-      context.registerStateChangeCallback(
+  private contextChanged(context?: AcsCallContext) {
+    this.context = context && this.safeContextCast(context);
+    if (this.context) {
+      this.context.registerStateChangeCallback(
         this.onStateChange.bind(this),
         this.getSelector()
       );
@@ -66,5 +81,12 @@ export class BaseComponent<
 
   private onStateChange(newState: State) {
     this.state = newState;
+  }
+
+  private typedEmit<K extends keyof CustomEventMap>(
+    type: K,
+    detail: CustomEventMap[K]
+  ): void {
+    this.$emit(type, detail);
   }
 }
