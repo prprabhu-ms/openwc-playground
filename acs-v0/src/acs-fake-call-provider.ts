@@ -1,16 +1,19 @@
 import { CallAdapterState } from '@azure/communication-react';
 import { customElement, FASTElement, html } from '@microsoft/fast-element';
 import { AcsCallContext, AcsCallProvider } from './AcsCallProvider.js';
+import { BaseCallProvider } from './BaseCallProvider.js';
 import { FakeCallAdapter } from './FakeCallAdapter.js';
 
 const template = html`<slot></slot>`;
 
 @customElement({ name: 'acs-fake-call-provider', template })
 export class AcsFakeCallProvider
-  extends FASTElement
-  implements AcsCallProvider
+  extends BaseCallProvider<AcsFakeCallContext>
 {
-  public xkcdAcsContext = new AcsFakeCallContext();
+  constructor() {
+    super();
+    this.setContext(new AcsFakeCallContext());
+  }
 }
 
 export class AcsFakeCallContext
@@ -24,6 +27,8 @@ export class AcsFakeCallContext
     this.onStateChange(state => {
       callback(selector(state));
     });
+    // Hydrate state for newly registered component.
+    callback(selector(this.getState()));
   }
 
   unregisterStateChangeCallback<StateT>(

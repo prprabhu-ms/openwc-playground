@@ -82,7 +82,7 @@ export class FakeCallAdapter implements CallAdapter {
   }
 
   private modifyState(act: (draft: CallAdapterState) => void) {
-    const newState = produce(act, this.state);
+    const newState = produce(this.state, act);
     if (this.state !== newState) {
       this.state = newState;
       this.handlers.forEach(handler => handler(this.state));

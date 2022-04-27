@@ -1,15 +1,14 @@
 /* eslint-disable max-classes-per-file */
 import {
-  FASTElement,
   customElement,
   html,
   when,
-  observable,
 } from '@microsoft/fast-element';
+import { BaseComponent } from './BaseComponent.js';
 import {
   AcsMicrophoneButtonContext,
   AcsMicrophoneState,
-  findMicrophoneButtonContext,
+  MicrophoneButtonSelector,
   microphoneButtonSelector,
 } from './MicrophoneButtonContext.js';
 
@@ -22,52 +21,33 @@ const checkedSlot = html<AcsMicrophoneButton>`
 `;
 
 const template = html<AcsMicrophoneButton>`
-  <fast-button @click=${x => x.onClick()}>
-    ${when(x => !x.state.checked, uncheckedSlot)}
-    ${when(x => x.state.checked, checkedSlot)}
+  <fast-button @click=${x=> x.onClick()}>
+    ${when(x => !x.state || !x.state.checked, uncheckedSlot)}
+    ${when(x => x.state?.checked, checkedSlot)}
   </fast-button>
 `;
 
 @customElement({ name: 'acs-microphone-button', template })
-export class AcsMicrophoneButton extends FASTElement {
-  private context?: AcsMicrophoneButtonContext;
+export class AcsMicrophoneButton extends BaseComponent<AcsMicrophoneButtonContext, AcsMicrophoneState> {
 
   strings = {
     onLabel: 'mute',
     offLabel: 'unmute',
   };
 
-  @observable state: AcsMicrophoneState = {
-    checked: false,
-  };
-
-  override connectedCallback(): void {
-    super.connectedCallback && super.connectedCallback();
-    this.context = findMicrophoneButtonContext(this);
-    this.context.registerStateChangeCallback(
-      this.onStateChange.bind(this),
-      microphoneButtonSelector
-    );
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback && super.disconnectedCallback();
-    this.context?.unregisterStateChangeCallback(
-      this.onStateChange.bind(this),
-      microphoneButtonSelector
-    );
-    this.context = undefined;
-  }
-
-  onStateChange(newState: AcsMicrophoneState) {
-    this.state = newState;
+  override getSelector(): MicrophoneButtonSelector {
+    return microphoneButtonSelector;
   }
 
   onClick() {
+    const context = this.getContext();
+    if (!this.state || !context) {
+      return;
+    }
     if (this.state.checked) {
-      this.context?.unmute();
+      context.unmute();
     } else {
-      this.context?.mute();
+      context.mute();
     }
   }
 }

@@ -23,7 +23,7 @@ export interface AcsMicrophoneButtonContext {
   ): void;
 }
 
-declare type MicrophoneButtonSelector = (
+export declare type MicrophoneButtonSelector = (
   state: CallAdapterState
 ) => AcsMicrophoneState;
 
