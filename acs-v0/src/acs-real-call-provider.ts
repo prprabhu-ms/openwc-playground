@@ -10,17 +10,13 @@ export class AcsRealCallProvider extends BaseCallProvider<AcsRealCallContext> {
   override connectedCallback(): void {
     super.connectedCallback && super.connectedCallback();
     if (this.adapter) {
-      const context = new AcsRealCallContext();
-      context.setAdapter(this.adapter);
-      this.setContext(context);
+      this.setContext(new AcsRealCallContext(this.adapter));
     }
   }
 
   adapterChanged(_oldValue: unknown, newValue: CallAdapter | undefined): void {
     if (newValue) {
-      const context = new AcsRealCallContext();
-      context.setAdapter(newValue);
-      this.setContext(context);
+      this.setContext(new AcsRealCallContext(newValue));
     }
   }
 

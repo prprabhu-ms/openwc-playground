@@ -9,69 +9,8 @@ import {
 import { CallAdapter, CallAdapterState } from '@azure/communication-react';
 import { AcsCallContext } from './AcsCallProvider.js';
 
-const INIT_STATE: CallAdapterState = {
-  page: 'call',
-  isLocalPreviewMicrophoneEnabled: false,
-  userId: { kind: 'communicationUser', communicationUserId: 'fake_id' },
-  displayName: 'fake_display_name',
-  devices: {
-    isSpeakerSelectionAvailable: false,
-    cameras: [],
-    microphones: [],
-    speakers: [],
-    unparentedViews: [],
-  },
-  isTeamsCall: false,
-  latestErrors: {},
-  call: {
-    id: 'fake_call_id',
-    callerInfo: {
-      identifier: {
-        kind: 'communicationUser',
-        communicationUserId: 'fake_id',
-      },
-      displayName: 'fake_display_name',
-    },
-    state: 'Connected',
-    direction: 'Outgoing',
-    isMuted: false,
-    isScreenSharingOn: false,
-    localVideoStreams: [],
-    remoteParticipants: {},
-    remoteParticipantsEnded: {},
-    transcription: {
-      isTranscriptionActive: false,
-    },
-    recording: {
-      isRecordingActive: false,
-    },
-    startTime: new Date(Date.now()),
-    endTime: undefined,
-    diagnostics: {
-      network: {
-        latest: {},
-      },
-      media: {
-        latest: {},
-      },
-    },
-  },
-};
-
 export class AcsRealCallContext implements AcsCallContext {
-  private adapter?: CallAdapter;
-
-  private pendingHandlerRegistrations: ((state: CallAdapterState) => void)[] =
-    [];
-
-  setAdapter(adapter: CallAdapter) {
-    this.dispose();
-    this.adapter = adapter;
-    this.pendingHandlerRegistrations.forEach(handler =>
-      adapter.onStateChange(handler)
-    );
-    this.pendingHandlerRegistrations = [];
-  }
+  constructor(private adapter: CallAdapter) {}
 
   registerStateChangeCallback<StateT>(
     callback: (newState: StateT) => void,
@@ -92,11 +31,7 @@ export class AcsRealCallContext implements AcsCallContext {
   }
 
   onStateChange(handler: (state: CallAdapterState) => void): void {
-    if (this.adapter) {
       this.adapter.onStateChange(handler);
-    } else {
-      this.pendingHandlerRegistrations.push(handler);
-    }
   }
 
   offStateChange(handler: (state: CallAdapterState) => void): void {
@@ -104,7 +39,7 @@ export class AcsRealCallContext implements AcsCallContext {
   }
 
   getState(): CallAdapterState {
-    return this.adapter ? this.adapter.getState() : INIT_STATE;
+    return this.adapter.getState();
   }
 
   on(): void {
