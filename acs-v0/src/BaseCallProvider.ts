@@ -1,7 +1,9 @@
-import { FASTElement } from "@microsoft/fast-element";
-import { AcsCallContext } from "./AcsCallProvider";
-import { ProviderRegisterEventDetail, ProviderUnregisterEventDetail } from "./events";
-
+import { FASTElement } from '@microsoft/fast-element';
+import { AcsCallContext } from './AcsCallProvider.js';
+import {
+  ProviderRegisterEventDetail,
+  ProviderUnregisterEventDetail,
+} from './events.js';
 
 /**
  * Base class for all providers.
@@ -11,8 +13,11 @@ import { ProviderRegisterEventDetail, ProviderUnregisterEventDetail } from "./ev
  * - Write a concrete provider that extends `BaseProvider<Context>`
  * - Call {@link BaseProvider.setContext} to set the context in whatever way makes sense for your provider.
  */
-export class BaseCallProvider<Context extends AcsCallContext> extends FASTElement {
+export class BaseCallProvider<
+  Context extends AcsCallContext
+> extends FASTElement {
   private context?: Context;
+
   private notificationFns: ((c?: Context) => void)[] = [];
 
   protected setContext(context?: Context) {

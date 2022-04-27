@@ -1,10 +1,5 @@
 import { CallAdapterState } from '@azure/communication-react';
 import * as reselect from 'reselect';
-import { findAcsCallContext } from './AcsCallProvider.js';
-
-export const findMicrophoneButtonContext = (
-  leaf: HTMLElement
-): AcsMicrophoneButtonContext => findAcsCallContext(leaf);
 
 export interface AcsMicrophoneState {
   checked: boolean;

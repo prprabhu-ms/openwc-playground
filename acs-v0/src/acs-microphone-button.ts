@@ -1,9 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import {
-  customElement,
-  html,
-  when,
-} from '@microsoft/fast-element';
+import { customElement, html, when } from '@microsoft/fast-element';
 import { BaseComponent } from './BaseComponent.js';
 import {
   AcsMicrophoneButtonContext,
@@ -21,15 +17,17 @@ const checkedSlot = html<AcsMicrophoneButton>`
 `;
 
 const template = html<AcsMicrophoneButton>`
-  <fast-button @click=${x=> x.onClick()}>
+  <fast-button @click=${x => x.onClick()}>
     ${when(x => !x.state || !x.state.checked, uncheckedSlot)}
     ${when(x => x.state?.checked, checkedSlot)}
   </fast-button>
 `;
 
 @customElement({ name: 'acs-microphone-button', template })
-export class AcsMicrophoneButton extends BaseComponent<AcsMicrophoneButtonContext, AcsMicrophoneState> {
-
+export class AcsMicrophoneButton extends BaseComponent<
+  AcsMicrophoneButtonContext,
+  AcsMicrophoneState
+> {
   strings = {
     onLabel: 'mute',
     offLabel: 'unmute',

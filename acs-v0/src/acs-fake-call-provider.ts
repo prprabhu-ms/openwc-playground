@@ -1,15 +1,13 @@
 import { CallAdapterState } from '@azure/communication-react';
-import { customElement, FASTElement, html } from '@microsoft/fast-element';
-import { AcsCallContext, AcsCallProvider } from './AcsCallProvider.js';
+import { customElement, html } from '@microsoft/fast-element';
+import { AcsCallContext } from './AcsCallProvider.js';
 import { BaseCallProvider } from './BaseCallProvider.js';
 import { FakeCallAdapter } from './FakeCallAdapter.js';
 
 const template = html`<slot></slot>`;
 
 @customElement({ name: 'acs-fake-call-provider', template })
-export class AcsFakeCallProvider
-  extends BaseCallProvider<AcsFakeCallContext>
-{
+export class AcsFakeCallProvider extends BaseCallProvider<AcsFakeCallContext> {
   constructor() {
     super();
     this.setContext(new AcsFakeCallContext());
