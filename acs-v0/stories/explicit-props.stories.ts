@@ -46,6 +46,7 @@ export const LostThemTypes = () => litHtml`
 </acs-microphone-button>
 `
 
+// Observation: FAST -> FAST template also loses type safety when setting properties.
 const template = html`
   <acs-microphone-button
     explicitprops
