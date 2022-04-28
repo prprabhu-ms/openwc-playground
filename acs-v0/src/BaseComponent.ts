@@ -52,7 +52,6 @@ export class BaseComponent<
   }
 
   set state(newState: State | undefined) {
-    console.trace('set state', newState, this.explicitProps);
     if (!this.explicitProps) {
       throw new Error(
         'Must set the `explicitprops` attr to provide explicit state'
