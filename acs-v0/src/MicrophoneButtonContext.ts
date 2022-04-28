@@ -5,9 +5,12 @@ export interface AcsMicrophoneState {
   checked: boolean;
 }
 
-export interface AcsMicrophoneButtonContext {
+export interface AcsMicrophoneHandlers {
   mute(): Promise<void>;
   unmute(): Promise<void>;
+}
+
+export interface AcsMicrophoneButtonContext extends AcsMicrophoneHandlers {
   registerStateChangeCallback(
     callback: (newState: AcsMicrophoneState) => void,
     selector: MicrophoneButtonSelector

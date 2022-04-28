@@ -4,6 +4,7 @@ import { AcsCallContext } from './AcsCallProvider.js';
 import { BaseComponent } from './BaseComponent.js';
 import {
   AcsMicrophoneButtonContext,
+  AcsMicrophoneHandlers,
   AcsMicrophoneState,
   MicrophoneButtonSelector,
   microphoneButtonSelector,
@@ -18,16 +19,22 @@ const checkedSlot = html<AcsMicrophoneButton>`
 `;
 
 const template = html<AcsMicrophoneButton>`
-  <fast-button @click=${x => x.onClick()}>
-    ${when(x => !x.state || !x.state.checked, uncheckedSlot)}
-    ${when(x => x.state?.checked, checkedSlot)}
-  </fast-button>
+  ${when(
+    x => x.state,
+    html`
+      <fast-button @click=${x => x.onClick()}>
+        ${when(x => !x.state?.checked, uncheckedSlot)}
+        ${when(x => x.state?.checked, checkedSlot)}
+      </fast-button>
+    `
+  )}
 `;
 
 @customElement({ name: 'acs-microphone-button', template })
 export class AcsMicrophoneButton extends BaseComponent<
-  AcsMicrophoneButtonContext,
-  AcsMicrophoneState
+  AcsMicrophoneState,
+  AcsMicrophoneHandlers,
+  AcsMicrophoneButtonContext
 > {
   strings = {
     onLabel: 'mute',
@@ -45,14 +52,13 @@ export class AcsMicrophoneButton extends BaseComponent<
   }
 
   onClick() {
-    const context = this.getContext();
-    if (!this.state || !context) {
+    if (!this.state || !this.handlers) {
       return;
     }
     if (this.state.checked) {
-      context.unmute();
+      this.handlers.unmute();
     } else {
-      context.mute();
+      this.handlers.mute();
     }
   }
 }

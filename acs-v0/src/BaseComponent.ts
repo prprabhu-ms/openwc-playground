@@ -1,5 +1,5 @@
 import { CallAdapterState } from '@azure/communication-react';
-import { FASTElement, observable } from '@microsoft/fast-element';
+import { attr, FASTElement, observable } from '@microsoft/fast-element';
 import { AcsCallContext } from './AcsCallProvider.js';
 import { CustomEventMap } from './events.js';
 
@@ -18,15 +18,47 @@ export interface BaseComponentContext<State> {
 }
 
 export class BaseComponent<
-  Context extends BaseComponentContext<State>,
-  State
+  State,
+  Handlers,
+  Context extends BaseComponentContext<State> & Handlers
 > extends FASTElement {
   private context?: Context;
 
-  @observable state?: State;
+  // If set, all ACS props must be set explicitly via a public JavaScript property.
+  @attr({ mode: 'boolean' }) explicitProps?: boolean;
 
-  protected getContext(): Context | undefined {
+  private _handlers?: Handlers;
+
+  set handlers(newHandlers: Handlers | undefined) {
+    if (!this.explicitProps) {
+      throw new Error(
+        'Must set the `explicitprops` attr to provide explicit handlers'
+      );
+    }
+    this._handlers = newHandlers;
+  }
+
+  get handlers(): Handlers | undefined {
+    if (this.explicitProps) {
+      return this._handlers;
+    }
     return this.context;
+  }
+
+  @observable private _state?: State;
+
+  get state(): State | undefined {
+    return this._state;
+  }
+
+  set state(newState: State | undefined) {
+    console.trace('set state', newState, this.explicitProps);
+    if (!this.explicitProps) {
+      throw new Error(
+        'Must set the `explicitprops` attr to provide explicit state'
+      );
+    }
+    this._state = newState;
   }
 
   // Must be overridden by concrete extensions of this class.
@@ -80,7 +112,9 @@ export class BaseComponent<
   }
 
   private onStateChange(newState: State) {
-    this.state = newState;
+    if (!this.explicitProps) {
+      this._state = newState;
+    }
   }
 
   private typedEmit<K extends keyof CustomEventMap>(
