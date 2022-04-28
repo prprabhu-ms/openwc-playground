@@ -23,6 +23,7 @@ export const Muted = () => litHtml`
 `
 
 // Observation: `explicitprops` with `checked: false` breaks the UI. What ?!
+// Fix: Only default slot was broken.
 export const Unmuted = () => litHtml`
 <acs-microphone-button explicitprops .state=${{checked: false}}>
 </acs-microphone-button>

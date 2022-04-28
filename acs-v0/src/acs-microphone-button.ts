@@ -11,7 +11,7 @@ import {
 } from './MicrophoneButtonContext.js';
 
 const uncheckedSlot = html<AcsMicrophoneButton>`
-  <slot> ${x => x.strings.onLabel} </slot>
+  <slot name="unchecked"> ${x => x.strings.onLabel} </slot>
 `;
 
 const checkedSlot = html<AcsMicrophoneButton>`
