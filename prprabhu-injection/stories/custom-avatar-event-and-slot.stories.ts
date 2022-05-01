@@ -13,8 +13,8 @@ import {
 import '../src/index.js';
 
 export default {
-  title: 'CustomAvatar',
-  component: 'injection-template',
+  title: 'CustomAvatarEventAndSlot',
+  component: 'custom-avatar-event-and-slot',
 };
 
 // icons from https://remixicon.com/
@@ -37,7 +37,7 @@ const getAvatar = (userId: string) => {
 // Custom Element Wrapper: Type unsafe
 /// ////////////////////////////////////////////////////////////////////////////
 
-export const EventAndSlotWrappedUntyped = () => litHTML`
+export const WrappedUntyped = () => litHTML`
   <event-and-slot-untyped-wrapper>
   </event-and-slot-untyped-wrapper>
 `;
@@ -83,7 +83,7 @@ class EventAndSlotUntypedWrapper extends FASTElement {
 // Custom Element Wrapper: Type safe
 /// ////////////////////////////////////////////////////////////////////////////
 
-export const EventAndSlotWrappedTyped = () => litHTML`
+export const WrappedTyped = () => litHTML`
   <event-and-slot-typed-wrapper>
   </event-and-slot-typed-wrapper>
 `;
@@ -142,7 +142,7 @@ class EventAndSlotTypedWrapper extends FASTElement {
 // I'm bending over backwards to showcase this use-case via storybook.
 // There is no easy way to inject JavaScript from the story into the preview iframe.
 // So, inline it all.
-export const EventAndSlotPlainJS = () => litHTML`
+export const PlainJS = () => litHTML`
   <!-- Need to include stylesheet here so that I can use the icons. -->
   <!-- Notice how slotted elements continue to get the styles in side <custom-avatar-event-and-slot> -->
   <link
@@ -237,7 +237,7 @@ plainContainer?.addEventListener('userleft', e => {
 // Client controlled rerendering
 /// ////////////////////////////////////////////////////////////////////////////
 
-export const EventAndSlotWrappedDynamic = () => litHTML`
+export const WrappedDynamic = () => litHTML`
   <event-and-slot-dynamic-wrapper>
   </event-and-slot-dynamic-wrapper>
 `;
@@ -307,7 +307,7 @@ class EventAndSlotDynamicWrapper extends FASTElement {
 // Default rendering
 /// ////////////////////////////////////////////////////////////////////////////
 
-export const EventAndSlotWrappedDelayed = () => litHTML`
+export const WrappedDelayed = () => litHTML`
   <event-and-slot-delayed-wrapper>
   </event-and-slot-delayed-wrapper>
 `;
@@ -319,7 +319,7 @@ const delayedTemplate = html<EventAndSlotDelayedWrapper>`
     href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
     rel="stylesheet"
   />
-  <custom-avatar-event-and-slot>
+  <custom-avatar-event-and-slot icondefaulttext="EXTERNAL DEFAULT">
     ${repeat(
       w => w.users,
       html`<i
@@ -327,7 +327,6 @@ const delayedTemplate = html<EventAndSlotDelayedWrapper>`
         class="${u => getAvatar(u.data.userId)}"
       ></i>`
     )}
-    <span slot="default-usericon">DEFAULT INJECTION</span>
   </custom-avatar-event-and-slot>
 `;
 

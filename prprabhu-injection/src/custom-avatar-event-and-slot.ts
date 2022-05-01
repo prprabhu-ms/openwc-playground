@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import {
+  attr,
   css,
   customElement,
   FASTElement,
@@ -63,7 +64,7 @@ const template = html<CustomAvatarEventAndSlot>`
         <div id="username">${u => u}</div>
         <div id="usericon">
           <slot name="${u => `usericon-${u}`}">
-            <slot name="default-usericon"></slot>
+            <span>${(u, c) => c.parent.iconDefaultText}</span>
           </slot>
         </div>
       </div>
@@ -89,6 +90,14 @@ const styles = css`
 @customElement({ name: 'custom-avatar-event-and-slot', template, styles })
 export class CustomAvatarEventAndSlot extends FASTElement {
   @observable users: string[] = [];
+
+  // Used in a placeholder when a dynamic icon for a slot is not set.
+  // I tried and failed to use a "default slot" for this because we don't know how many
+  // default slots we need to fill, and there is no way to slot a single child in a multiple
+  // slots.
+  // This means that the default behavior API is limited -- Client can't really style it
+  // arbitrarily. It is a data-injection API only, not a render injection API.
+  @attr iconDefaultText = 'INTERNAL DEFAULT';
 
   addUser() {
     if (this.users.length === userIds.length) {
