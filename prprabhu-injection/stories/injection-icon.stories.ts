@@ -1,5 +1,4 @@
 import { html } from 'lit';
-import '../src/injection-icon.js';
 import '../src/index.js';
 
 export default {

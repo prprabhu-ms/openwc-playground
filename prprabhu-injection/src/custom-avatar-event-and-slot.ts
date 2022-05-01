@@ -37,6 +37,17 @@ declare global {
       listener: (this: HTMLElement, ev: CustomEvent<CustomEventMap[K]>) => void
     ): void;
   }
+
+  interface Element {
+    addEventListener<K extends keyof CustomEventMap>(
+      type: K,
+      listener: (this: Element, ev: CustomEvent<CustomEventMap[K]>) => void
+    ): void;
+    removeEventListener<K extends keyof CustomEventMap>(
+      type: K,
+      listener: (this: Element, ev: CustomEvent<CustomEventMap[K]>) => void
+    ): void;
+  }
 }
 
 const userIds = ['apple', 'banana', 'jackfruit', 'mango'];

@@ -1,3 +1,6 @@
+import './custom-avatar-event-and-slot.js';
+import './injection-icon.js';
+
 import {
   fastButton,
   provideFASTDesignSystem,

@@ -138,3 +138,97 @@ class EventAndSlotTypedWrapper extends FASTElement {
 /// ////////////////////////////////////////////////////////////////////////////
 // Plain JavaScript
 /// ////////////////////////////////////////////////////////////////////////////
+
+// I'm bending over backwards to showcase this use-case via storybook.
+// There is no easy way to inject JavaScript from the story into the preview iframe.
+// So, inline it all.
+export const EventAndSlotPlainJS = () => litHTML`
+  <!-- Need to include stylesheet here so that I can use the icons. -->
+  <!-- Notice how slotted elements continue to get the styles in side <custom-avatar-event-and-slot> -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+  />
+
+  <div id="plain-container">
+    <custom-avatar-event-and-slot id="plain-component">
+    </custom-avatar-event-and-slot>
+  </div>
+
+  <script>
+    const getAvatar = (userId) => {
+      switch (userId) {
+        case 'apple':
+          return 'ri-code-box-fill';
+        case 'banana':
+          return 'ri-ancient-gate-fill';
+        case 'jackfruit':
+          return 'ri-indent-decrease';
+        case 'mango':
+          return 'ri-paragraph';
+        default:
+          return 'ri-error-warning-fill';
+      }
+    };
+
+    const plainContainer = document.getElementById('plain-container');
+
+    plainContainer?.addEventListener('userjoined', e => {
+      const plainComponent = document.getElementById('plain-component');
+      // Full typescript support (IDE auto-complete etc.)
+      const targetSlot = e.detail.targetSlot;
+      const userId = e.detail.data.userId;
+      const child = document.createElement('i');
+      child.setAttribute('slot', targetSlot);
+      child.setAttribute('class', getAvatar(userId));
+      console.log(plainComponent);
+      plainComponent?.appendChild(child);
+    });
+
+    plainContainer?.addEventListener('userleft', e => {
+      const plainComponent = document.getElementById('plain-component');
+      if (!plainComponent) {
+        return;
+      }
+      const targetSlot = e.detail.targetSlot;
+      for (let i = 0; i < plainComponent.children.length; i++) {
+        const child = plainComponent.children[i];
+        if (child.getAttribute('slot') === targetSlot) {
+          plainComponent.removeChild(child);
+          return;
+        }
+      }
+    })
+  </script>
+`;
+
+// Following code is a repeat of what's inline the <script> tag above.
+// It shows IDE support for events etc.
+const plainContainer = document.getElementById('plain-container');
+
+plainContainer?.addEventListener('userjoined', e => {
+  const plainComponent = document.getElementById('plain-component');
+  // Full typescript support (IDE auto-complete etc.)
+  const { targetSlot } = e.detail;
+  const { userId } = e.detail.data;
+  const child = document.createElement('i');
+  child.setAttribute('slot', targetSlot);
+  child.setAttribute('class', getAvatar(userId));
+  console.log(plainComponent);
+  plainComponent?.appendChild(child);
+});
+
+plainContainer?.addEventListener('userleft', e => {
+  const plainComponent = document.getElementById('plain-component');
+  if (!plainComponent) {
+    return;
+  }
+  const { targetSlot } = e.detail;
+  for (let i = 0; i < plainComponent.children.length; i += 1) {
+    const child = plainComponent.children[i];
+    if (child.getAttribute('slot') === targetSlot) {
+      plainComponent.removeChild(child);
+      return;
+    }
+  }
+});
