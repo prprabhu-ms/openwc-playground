@@ -306,3 +306,60 @@ class EventAndSlotDynamicWrapper extends FASTElement {
 /// ////////////////////////////////////////////////////////////////////////////
 // Default rendering
 /// ////////////////////////////////////////////////////////////////////////////
+
+export const EventAndSlotWrappedDelayed = () => litHTML`
+  <event-and-slot-delayed-wrapper>
+  </event-and-slot-delayed-wrapper>
+`;
+
+const delayedTemplate = html<EventAndSlotDelayedWrapper>`
+  <!-- Need to include stylesheet here so that I can use the icons. -->
+  <!-- Notice how slotted elements continue to get the styles in side <custom-avatar-event-and-slot> -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+  />
+  <custom-avatar-event-and-slot>
+    ${repeat(
+      w => w.users,
+      html`<i
+        slot="${u => u.targetSlot}"
+        class="${u => getAvatar(u.data.userId)}"
+      ></i>`
+    )}
+    <span slot="default-usericon">DEFAULT INJECTION</span>
+  </custom-avatar-event-and-slot>
+`;
+
+@customElement({
+  name: 'event-and-slot-delayed-wrapper',
+  template: delayedTemplate,
+})
+class EventAndSlotDelayedWrapper extends FASTElement {
+  @observable users: UserJoinedEventDetail[] = [];
+
+  override connectedCallback(): void {
+    super.connectedCallback && super.connectedCallback();
+    // Full typescript support (IDE auto-complete etc.)
+    this.addEventListener('userjoined', e => this.addUser(e.detail));
+    this.addEventListener('userleft', e => this.removeUser(e.detail));
+  }
+
+  override disconnectedCallback(): void {
+    this.removeEventListener('userjoined', e => this.addUser(e.detail));
+    this.removeEventListener('userleft', e => this.removeUser(e.detail));
+    super.disconnectedCallback && super.disconnectedCallback();
+  }
+
+  addUser(user: UserJoinedEventDetail) {
+    // The user is only added 3 seconds after the event.
+    // So the default slot will show for the first 3 seconds.
+    setTimeout(() => {
+      this.users = [...this.users, user];
+    }, 3000);
+  }
+
+  removeUser(user: UserLeftEventDetail) {
+    this.users = this.users.filter(u => u.targetSlot !== user.targetSlot);
+  }
+}

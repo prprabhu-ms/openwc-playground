@@ -61,7 +61,11 @@ const template = html<CustomAvatarEventAndSlot>`
     html`
       <div id="user">
         <div id="username">${u => u}</div>
-        <div id="usericon"><slot name="${u => u}"></slot></div>
+        <div id="usericon">
+          <slot name="${u => `usericon-${u}`}">
+            <slot name="default-usericon"></slot>
+          </slot>
+        </div>
       </div>
     `
   )}
@@ -92,7 +96,10 @@ export class CustomAvatarEventAndSlot extends FASTElement {
     }
     const userId = userIds[this.users.length];
     this.users = [...this.users, userId];
-    this.typedEmit('userjoined', { targetSlot: userId, data: { userId } });
+    this.typedEmit('userjoined', {
+      targetSlot: `usericon-${userId}`,
+      data: { userId },
+    });
   }
 
   removeUser() {
@@ -102,7 +109,7 @@ export class CustomAvatarEventAndSlot extends FASTElement {
     const users = [...this.users];
     const [userId] = users.splice(users.length - 1);
     this.users = users;
-    this.typedEmit('userleft', { targetSlot: userId });
+    this.typedEmit('userleft', { targetSlot: `usericon-${userId}` });
   }
 
   private typedEmit<K extends keyof CustomEventMap>(
