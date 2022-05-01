@@ -15,11 +15,11 @@ declare global {
   interface HTMLElement {
     addEventListener<K extends keyof CustomEventMap>(
       type: K,
-      listener: (this: Document, ev: CustomEvent<CustomEventMap[K]>) => void
+      listener: (this: HTMLElement, ev: CustomEvent<CustomEventMap[K]>) => void
     ): void;
     removeEventListener<K extends keyof CustomEventMap>(
       type: K,
-      listener: (this: Document, ev: CustomEvent<CustomEventMap[K]>) => void
+      listener: (this: HTMLElement, ev: CustomEvent<CustomEventMap[K]>) => void
     ): void;
   }
 }
