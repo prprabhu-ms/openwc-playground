@@ -16,9 +16,14 @@ export default {
 
 // icons from https://remixicon.com/
 
-export const EventAndSlotWrapped = () => litHTML`
+export const EventAndSlotWrappedUntyped = () => litHTML`
   <event-and-slot-untyped-wrapper>
   </event-and-slot-untyped-wrapper>
+`;
+
+export const EventAndSlotWrappedTyped = () => litHTML`
+  <event-and-slot-typed-wrapper>
+  </event-and-slot-typed-wrapper>
 `;
 
 const getAvatar = (userId: string) => {
@@ -36,7 +41,7 @@ const getAvatar = (userId: string) => {
   }
 };
 
-const template = html<EventAndSlotWrapper>`
+const untypedTemplate = html<EventAndSlotUntypedWrapper>`
   <!-- Need to include stylesheet here so that I can use the icons. -->
   <!-- Notice how slotted elements continue to get the styles in side <custom-avatar-event-and-slot> -->
   <link
@@ -54,9 +59,56 @@ const template = html<EventAndSlotWrapper>`
   </custom-avatar-event-and-slot>
 `;
 
-@customElement({ name: 'event-and-slot-untyped-wrapper', template })
-class EventAndSlotWrapper extends FASTElement {
+@customElement({
+  name: 'event-and-slot-untyped-wrapper',
+  template: untypedTemplate,
+})
+class EventAndSlotUntypedWrapper extends FASTElement {
   @observable userIds: string[] = [];
+
+  addUser(userId: string) {
+    this.userIds = [...this.userIds, userId];
+  }
+
+  removeUser(userId: string) {
+    this.userIds = this.userIds.filter(u => u !== userId);
+  }
+}
+
+const typedTemplate = html<EventAndSlotTypedWrapper>`
+  <!-- Need to include stylesheet here so that I can use the icons. -->
+  <!-- Notice how slotted elements continue to get the styles in side <custom-avatar-event-and-slot> -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+  />
+  <custom-avatar-event-and-slot>
+    ${repeat(
+      w => w.userIds,
+      html`<i slot="${u => u}" class="${u => getAvatar(u)}"></i>`
+    )}
+  </custom-avatar-event-and-slot>
+`;
+
+@customElement({
+  name: 'event-and-slot-typed-wrapper',
+  template: typedTemplate,
+})
+class EventAndSlotTypedWrapper extends FASTElement {
+  @observable userIds: string[] = [];
+
+  override connectedCallback(): void {
+    super.connectedCallback && super.connectedCallback();
+    // Full typescript support (IDE auto-complete etc.)
+    this.addEventListener('userjoined', e => this.addUser(e.detail.userId));
+    this.addEventListener('userleft', e => this.removeUser(e.detail.userId));
+  }
+
+  override disconnectedCallback(): void {
+    this.removeEventListener('userjoined', e => this.addUser(e.detail.userId));
+    this.removeEventListener('userleft', e => this.removeUser(e.detail.userId));
+    super.disconnectedCallback && super.disconnectedCallback();
+  }
 
   addUser(userId: string) {
     this.userIds = [...this.userIds, userId];
