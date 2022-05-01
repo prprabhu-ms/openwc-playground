@@ -9,10 +9,17 @@ import {
 } from '@microsoft/fast-element';
 
 export interface UserJoinedEventDetail {
-  userId: string;
+  // Name of the dynamic slot that will be added for this user.
+  targetSlot: string;
+  // All data availble for this user.
+  data: {
+    userId: string;
+  };
 }
 
-export type UserLeftEventDetail = UserJoinedEventDetail;
+export interface UserLeftEventDetail {
+  targetSlot: string;
+}
 
 export interface CustomEventMap {
   userjoined: UserJoinedEventDetail;
@@ -74,7 +81,7 @@ export class CustomAvatarEventAndSlot extends FASTElement {
     }
     const userId = userIds[this.users.length];
     this.users = [...this.users, userId];
-    this.typedEmit('userjoined', { userId });
+    this.typedEmit('userjoined', { targetSlot: userId, data: { userId } });
   }
 
   removeUser() {
@@ -84,7 +91,7 @@ export class CustomAvatarEventAndSlot extends FASTElement {
     const users = [...this.users];
     const [userId] = users.splice(users.length - 1);
     this.users = users;
-    this.typedEmit('userleft', { userId });
+    this.typedEmit('userleft', { targetSlot: userId });
   }
 
   private typedEmit<K extends keyof CustomEventMap>(

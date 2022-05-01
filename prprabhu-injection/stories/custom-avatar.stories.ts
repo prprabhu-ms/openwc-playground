@@ -6,7 +6,10 @@ import {
   repeat,
 } from '@microsoft/fast-element';
 import { html as litHTML } from 'lit';
-import '../src/custom-avatar-event-and-slot.js';
+import {
+  UserJoinedEventDetail,
+  UserLeftEventDetail,
+} from '../src/custom-avatar-event-and-slot.js';
 import '../src/index.js';
 
 export default {
@@ -15,17 +18,6 @@ export default {
 };
 
 // icons from https://remixicon.com/
-
-export const EventAndSlotWrappedUntyped = () => litHTML`
-  <event-and-slot-untyped-wrapper>
-  </event-and-slot-untyped-wrapper>
-`;
-
-export const EventAndSlotWrappedTyped = () => litHTML`
-  <event-and-slot-typed-wrapper>
-  </event-and-slot-typed-wrapper>
-`;
-
 const getAvatar = (userId: string) => {
   switch (userId) {
     case 'apple':
@@ -41,6 +33,15 @@ const getAvatar = (userId: string) => {
   }
 };
 
+/// ////////////////////////////////////////////////////////////////////////////
+// Custom Element Wrapper: Type unsafe
+/// ////////////////////////////////////////////////////////////////////////////
+
+export const EventAndSlotWrappedUntyped = () => litHTML`
+  <event-and-slot-untyped-wrapper>
+  </event-and-slot-untyped-wrapper>
+`;
+
 const untypedTemplate = html<EventAndSlotUntypedWrapper>`
   <!-- Need to include stylesheet here so that I can use the icons. -->
   <!-- Notice how slotted elements continue to get the styles in side <custom-avatar-event-and-slot> -->
@@ -49,12 +50,15 @@ const untypedTemplate = html<EventAndSlotUntypedWrapper>`
     rel="stylesheet"
   />
   <custom-avatar-event-and-slot
-    @userjoined=${(w, c) => w.addUser((c.event as any).detail.userId)}
-    @userleft=${(w, c) => w.removeUser((c.event as any).detail.userId)}
+    @userjoined=${(w, c) => w.addUser((c.event as any).detail)}
+    @userleft=${(w, c) => w.removeUser((c.event as any).detail)}
   >
     ${repeat(
-      w => w.userIds,
-      html`<i slot="${u => u}" class="${u => getAvatar(u)}"></i>`
+      w => w.users,
+      html`<i
+        slot="${u => u.targetSlot}"
+        class="${u => getAvatar(u.data.userId)}"
+      ></i>`
     )}
   </custom-avatar-event-and-slot>
 `;
@@ -64,16 +68,25 @@ const untypedTemplate = html<EventAndSlotUntypedWrapper>`
   template: untypedTemplate,
 })
 class EventAndSlotUntypedWrapper extends FASTElement {
-  @observable userIds: string[] = [];
+  @observable users: UserJoinedEventDetail[] = [];
 
-  addUser(userId: string) {
-    this.userIds = [...this.userIds, userId];
+  addUser(user: UserJoinedEventDetail) {
+    this.users = [...this.users, user];
   }
 
-  removeUser(userId: string) {
-    this.userIds = this.userIds.filter(u => u !== userId);
+  removeUser(user: UserLeftEventDetail) {
+    this.users = this.users.filter(u => u.targetSlot !== user.targetSlot);
   }
 }
+
+/// ////////////////////////////////////////////////////////////////////////////
+// Custom Element Wrapper: Type safe
+/// ////////////////////////////////////////////////////////////////////////////
+
+export const EventAndSlotWrappedTyped = () => litHTML`
+  <event-and-slot-typed-wrapper>
+  </event-and-slot-typed-wrapper>
+`;
 
 const typedTemplate = html<EventAndSlotTypedWrapper>`
   <!-- Need to include stylesheet here so that I can use the icons. -->
@@ -84,8 +97,11 @@ const typedTemplate = html<EventAndSlotTypedWrapper>`
   />
   <custom-avatar-event-and-slot>
     ${repeat(
-      w => w.userIds,
-      html`<i slot="${u => u}" class="${u => getAvatar(u)}"></i>`
+      w => w.users,
+      html`<i
+        slot="${u => u.targetSlot}"
+        class="${u => getAvatar(u.data.userId)}"
+      ></i>`
     )}
   </custom-avatar-event-and-slot>
 `;
@@ -95,26 +111,30 @@ const typedTemplate = html<EventAndSlotTypedWrapper>`
   template: typedTemplate,
 })
 class EventAndSlotTypedWrapper extends FASTElement {
-  @observable userIds: string[] = [];
+  @observable users: UserJoinedEventDetail[] = [];
 
   override connectedCallback(): void {
     super.connectedCallback && super.connectedCallback();
     // Full typescript support (IDE auto-complete etc.)
-    this.addEventListener('userjoined', e => this.addUser(e.detail.userId));
-    this.addEventListener('userleft', e => this.removeUser(e.detail.userId));
+    this.addEventListener('userjoined', e => this.addUser(e.detail));
+    this.addEventListener('userleft', e => this.removeUser(e.detail));
   }
 
   override disconnectedCallback(): void {
-    this.removeEventListener('userjoined', e => this.addUser(e.detail.userId));
-    this.removeEventListener('userleft', e => this.removeUser(e.detail.userId));
+    this.removeEventListener('userjoined', e => this.addUser(e.detail));
+    this.removeEventListener('userleft', e => this.removeUser(e.detail));
     super.disconnectedCallback && super.disconnectedCallback();
   }
 
-  addUser(userId: string) {
-    this.userIds = [...this.userIds, userId];
+  addUser(user: UserJoinedEventDetail) {
+    this.users = [...this.users, user];
   }
 
-  removeUser(userId: string) {
-    this.userIds = this.userIds.filter(u => u !== userId);
+  removeUser(user: UserLeftEventDetail) {
+    this.users = this.users.filter(u => u.targetSlot !== user.targetSlot);
   }
 }
+
+/// ////////////////////////////////////////////////////////////////////////////
+// Plain JavaScript
+/// ////////////////////////////////////////////////////////////////////////////
