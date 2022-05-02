@@ -6,10 +6,7 @@ import {
   repeat,
 } from '@microsoft/fast-element';
 import { html as litHTML } from 'lit';
-import {
-  UserJoinedEventDetail,
-  UserLeftEventDetail,
-} from '../src/custom-avatar-event-and-slot.js';
+import { UserJoinedEventDetail, UserLeftEventDetail } from '../src/event.js';
 import '../src/index.js';
 
 export default {
