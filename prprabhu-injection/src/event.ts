@@ -11,10 +11,19 @@ export interface UserLeftEventDetail {
   targetSlot: string;
 }
 
+export interface FileSharingCardEventDetail {
+  // Call to notify file upload / download progress.
+  // Must be in [0,1].
+  // This is a PoC, so garbage in garbage out my friend.
+  notifyProgress(ratio: number): void;
+}
+
 export interface CustomEventMap {
   userjoined: UserJoinedEventDetail;
   userleft: UserLeftEventDetail;
+  fileadded: FileSharingCardEventDetail;
 }
+
 
 declare global {
   interface HTMLElement {
