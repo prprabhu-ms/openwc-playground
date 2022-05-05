@@ -23,7 +23,7 @@ const styles = css`
 
 const contentTemplate = html<MixedMessage>`
   <span slot="message">
-    ${when(w => w.messageId, html`<div>${w => MESSAGES[w.messageId]}</div>`)}
+    ${when(w => w.messageId, html`<span>${w => MESSAGES[w.messageId]}</span>`)}
   </span>
 `;
 
