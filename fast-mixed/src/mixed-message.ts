@@ -8,9 +8,7 @@ import {
 } from '@microsoft/fast-element';
 import { MESSAGES } from './data.js';
 
-const template = html<MixedMessage>`
-  ${when(w => w.messageId, html`<div>${w => MESSAGES[w.messageId]}</div>`)}
-`;
+const template = html<MixedMessage>`<div><slot name="message"></slot></div>`;
 
 const styles = css`
   div {
@@ -23,7 +21,18 @@ const styles = css`
   }
 `;
 
+const contentTemplate = html<MixedMessage>`
+  <span slot="message">
+    ${when(w => w.messageId, html`<div>${w => MESSAGES[w.messageId]}</div>`)}
+  </span>
+`;
+
 @customElement({ name: 'mixed-message', template, styles })
-class MixedMessage extends FASTElement {
+export class MixedMessage extends FASTElement {
   @attr messageId?: string;
+
+  override connectedCallback() {
+    super.connectedCallback && super.connectedCallback();
+    contentTemplate.render(this, this);
+  }
 }
