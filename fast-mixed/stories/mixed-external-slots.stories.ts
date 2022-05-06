@@ -2,7 +2,7 @@ import { html as litHTML } from 'lit';
 import '../src/index.js';
 
 export default {
-  title: 'MixedExternaSlots',
+  title: 'MixedExternalSlots',
   component: 'mixed-external-slots',
 };
 
