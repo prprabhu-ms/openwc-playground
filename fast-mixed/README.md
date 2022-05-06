@@ -1,62 +1,9 @@
-# \<fast-mixed>
+# fast-mixed
 
-This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
+This is an exploration of using light and shadow DOM together in a custom element.
 
-## Installation
-
-```bash
-npm i fast-mixed
-```
-
-## Usage
-
-```html
-<script type="module">
-  import 'fast-mixed/fast-mixed.js';
-</script>
-
-<fast-mixed></fast-mixed>
-```
-
-## Linting and formatting
-
-To scan the project for linting and formatting errors, run
-
-```bash
-npm run lint
-```
-
-To automatically fix linting and formatting errors, run
-
-```bash
-npm run format
-```
-
-## Demoing with Storybook
-
-To run a local instance of Storybook for your component, run
-
-```bash
-npm run storybook
-```
-
-To build a production version of Storybook, run
-
-```bash
-npm run storybook:build
-```
-
-
-## Tooling configs
-
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
-
-If you customize the configuration a lot, you can consider moving them to individual files.
-
-## Local Demo with `web-dev-server`
-
-```bash
-npm start
-```
-
-To run a local development server that serves the basic demo located in `demo/index.html`
+- [stories/mixed-message](./stories/mixed-message.stories.ts) and [stories/mixed-message-thread](./stories/mixed-message-thread.stories.ts) explore rendering content in light DOM internally in a component and then slotting into shadow DOM.
+- [stories/mixed-dynamic](./stories/mixed-dynamic.stories.ts) verifies that elements rendered in the light DOM by the component are reactive.
+- [stories/mixed-external-slots](./stories/mixed-external-slots.stories.ts) explores what happens when both the client and the component renders slots to the light DOM.
+- [stories/mixed-hidden-slots](./stories/mixed-hidden-slots.stories.ts) is a failed attempt to hide internal slots used to render both in light and shadow DOM in a custom component.
+- [stories/nested](./stories/nested.stories.ts) validates that slots can be forwarded in a custom element to its children, and (fails) to do the same in a component that uses just light DOM.

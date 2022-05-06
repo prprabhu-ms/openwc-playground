@@ -1,62 +1,8 @@
-# \<prprabhu-injection>
+# prprabhu-injection
 
-This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
+This is an exploration of how client of a component can be notified of internal state changes and react to that notification.
 
-## Installation
-
-```bash
-npm i prprabhu-injection
-```
-
-## Usage
-
-```html
-<script type="module">
-  import 'prprabhu-injection/prprabhu-injection.js';
-</script>
-
-<prprabhu-injection></prprabhu-injection>
-```
-
-## Linting and formatting
-
-To scan the project for linting and formatting errors, run
-
-```bash
-npm run lint
-```
-
-To automatically fix linting and formatting errors, run
-
-```bash
-npm run format
-```
-
-## Demoing with Storybook
-
-To run a local instance of Storybook for your component, run
-
-```bash
-npm run storybook
-```
-
-To build a production version of Storybook, run
-
-```bash
-npm run storybook:build
-```
-
-
-## Tooling configs
-
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
-
-If you customize the configuration a lot, you can consider moving them to individual files.
-
-## Local Demo with `web-dev-server`
-
-```bash
-npm start
-```
-
-To run a local development server that serves the basic demo located in `demo/index.html`
+- [stories/injection-icon](./stories/injection-icon.stories.ts) is the simplest case of injecting elements via slots
+- [stories/custom-avatar-callback](./stories/custom-avatar-callback.stories.ts) explores using callbacks for both notification of internal state changes and responding with elements to render.
+- [stories/custom-avatar-event-and-slot](./stories/custom-avatar-event-and-slot.stories.ts) explores using events for notification and (dynamic) slots fo responding with elements to render.
+- [stories/file-sharing-event](./stories/file-sharing-event.stories.ts) explores a case where client wants to return event-related data that is then used for rendering internally.

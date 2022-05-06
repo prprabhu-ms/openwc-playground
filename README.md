@@ -1,13 +1,16 @@
-# openwc-playground
+# A collection of micro-explorations with web components
 
-A playground for following the [Open WC guides](https://open-wc.org/guides/)
+These explorations were intended to
 
-## Reconciliation in Lit
+* Help me understand different aspects of web components
+* Help make architectural decisions in building a new componenents library using web comonents
 
-Some components that show how reconciliation works in Lit.
 
-Run
+These explorations are not meant for consumption (in any sense of the word). There is a little bit of explanation with each, more to jog the memory for later reference.
 
-```bash
-cd prprabhu-pg && yarn start storybook
-```
+- [acs-v0](./acs-v0/README.md): A PoC implementation of a microphone button that brings together several architectural decisions in the other explorations.
+- An exploration of how templates behave in [LitElement](./prprabhu-pg/README.md) and [FASTElement](./prprabhu-fast/README.md). Performance implications, especially compared to [React](./component-updates/README.md).
+- [wc101](./wc101/README.md) was used for a web components 101 session.
+- [prprabhu-providers](./prprabhu-providers/README.md) explores some ways to connect components to backend services.
+- [prprabhu-injection](./prprabhu-injection/README.md) explores ways for client of a component to be notified of internal state changes and injection of elements into the component.
+- [fast-mixed](./fast-mixed/README.md) is an exploration of using light DOM and shadow DOM together.
