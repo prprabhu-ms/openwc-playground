@@ -14,3 +14,5 @@ These explorations are not meant for consumption (in any sense of the word). The
 - [prprabhu-providers](./prprabhu-providers/README.md) explores some ways to connect components to backend services.
 - [prprabhu-injection](./prprabhu-injection/README.md) explores ways for client of a component to be notified of internal state changes and injection of elements into the component.
 - [fast-mixed](./fast-mixed/README.md) is an exploration of using light DOM and shadow DOM together.
+- [x-styles](./x-styles/README.md) explores styling custom elements.
+- [x-focus](./x-focus/README.md) explores interaction of focus / tab order with custom elements.
