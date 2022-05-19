@@ -12,8 +12,11 @@ const styles = css`
 
 
 const outerTemplate = html`
-While it is possible to choose which parts of inner to expose for each instance of inner.
-It is not possible to target the same exported part of two instances differently for the external stylesheet.
+<ul>
+  <li>It is always possible to choose which parts of inner to expose for each instance of inner.</li>
+  <li>Targeting the same part of two different instances of inner requires name remapping. Unsure how well that is supported.</li>
+</ul>
+
 <div>
   Only one of two parts of inner are exported here
     <x-exportparts-inner exportparts="please-export-me"></x-exportparts-inner>
@@ -21,7 +24,14 @@ It is not possible to target the same exported part of two instances differently
 <div>
   Both parts of inner are exported here.
   <x-exportparts-inner exportparts="please-export-me, and-me"></x-exportparts-inner>
-</div>`
+</div>
+<div>
+  There are two inner elements here, both export one part, but renamed.
+  <x-exportparts-inner exportparts="please-export-me: please-export-me-1"></x-exportparts-inner>
+  <x-exportparts-inner exportparts="please-export-me: please-export-me-2"></x-exportparts-inner>
+</div>
+
+`
 
 @customElement({name: 'x-exportparts-outer', template:outerTemplate, styles})
 export class ExportpartsOuter extends FASTElement {}

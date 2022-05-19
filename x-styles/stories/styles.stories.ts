@@ -69,6 +69,12 @@ export const ExportParts = () => html`
     x-exportparts-outer::part(and-me) {
       background-color: cyan;
     }
+    x-exportparts-outer::part(please-export-me-1) {
+      background-color: yellow;
+    }
+    x-exportparts-outer::part(please-export-me-2) {
+      background-color: green;
+    }
   </style>
   <x-exportparts-outer></x-exportparts-outer>
 `
