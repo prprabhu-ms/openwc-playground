@@ -12,11 +12,10 @@ const styles = css`
 
 
 const outerTemplate = html`
-<ul>
+<ul></ul>
   <li>It is always possible to choose which parts of inner to expose for each instance of inner.</li>
-  <li>Targeting the same part of two different instances of inner requires name remapping. Unsure how well that is supported.</li>
+  <li>Targeting the same part of two different instances is not possible because of name conflict.</li>
 </ul>
-
 <div>
   Only one of two parts of inner are exported here
     <x-exportparts-inner exportparts="please-export-me"></x-exportparts-inner>
@@ -25,16 +24,10 @@ const outerTemplate = html`
   Both parts of inner are exported here.
   <x-exportparts-inner exportparts="please-export-me, and-me"></x-exportparts-inner>
 </div>
-<div>
-  There are two inner elements here, both export one part, but renamed.
-  <x-exportparts-inner exportparts="please-export-me: please-export-me-1"></x-exportparts-inner>
-  <x-exportparts-inner exportparts="please-export-me: please-export-me-2"></x-exportparts-inner>
-</div>
-
 `
 
-@customElement({name: 'x-exportparts-outer', template:outerTemplate, styles})
-export class ExportpartsOuter extends FASTElement {}
+@customElement({name: 'x-exportparts', template:outerTemplate, styles})
+export class Exportparts extends FASTElement {}
 
 const innerTemplate = html`
 <div>
@@ -44,4 +37,4 @@ const innerTemplate = html`
 `
 
 @customElement({name: 'x-exportparts-inner', template: innerTemplate, styles})
-export class ExportpartsInner extends FASTElement {}
+class ExportpartsInner extends FASTElement {}

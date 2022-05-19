@@ -60,21 +60,3 @@ export const CustomCSSPart = () => html`
   </style>
   <styles-outer></styles-outer>
 `;
-
-export const ExportParts = () => html`
-<style>
-    x-exportparts-outer::part(please-export-me) {
-      background-color: aquamarine;
-    }
-    x-exportparts-outer::part(and-me) {
-      background-color: cyan;
-    }
-    x-exportparts-outer::part(please-export-me-1) {
-      background-color: yellow;
-    }
-    x-exportparts-outer::part(please-export-me-2) {
-      background-color: green;
-    }
-  </style>
-  <x-exportparts-outer></x-exportparts-outer>
-`
