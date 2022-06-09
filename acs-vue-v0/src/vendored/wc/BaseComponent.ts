@@ -1,7 +1,7 @@
-import { CallAdapterState } from '@azure/communication-react';
+import type { CallAdapterState } from '@azure/communication-react';
 import { attr, FASTElement, observable } from '@microsoft/fast-element';
-import { AcsCallContext } from './AcsCallProvider.js';
-import { CustomEventMap } from './events.js';
+import type { AcsCallContext } from './AcsCallProvider.js';
+import type { CustomEventMap } from './events.js';
 
 export declare type Selector<State> = (state: CallAdapterState) => State;
 

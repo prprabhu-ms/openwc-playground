@@ -1,4 +1,4 @@
-import { CallAdapter, CallAdapterState } from '@azure/communication-react';
+import type { CallAdapter, CallAdapterState } from '@azure/communication-react';
 
 export interface AcsCallContext extends CallAdapter {
   registerStateChangeCallback<StateT>(

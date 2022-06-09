@@ -1,13 +1,13 @@
 // immer uses the pattern of assigning to a `draft` param.
 /* eslint-disable no-param-reassign */
 
-import {
+import type {
   AudioDeviceInfo,
   Call,
   VideoDeviceInfo,
 } from '@azure/communication-calling';
-import { CallAdapter, CallAdapterState } from '@azure/communication-react';
-import { AcsCallContext } from './AcsCallProvider.js';
+import type { CallAdapter, CallAdapterState } from '@azure/communication-react';
+import type { AcsCallContext } from './AcsCallProvider.js';
 
 export class AcsRealCallContext implements AcsCallContext {
   private adapter: CallAdapter;

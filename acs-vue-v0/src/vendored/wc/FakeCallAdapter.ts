@@ -1,12 +1,12 @@
 // immer uses the pattern of assigning to a `draft` param.
 /* eslint-disable no-param-reassign */
 
-import {
+import type {
   AudioDeviceInfo,
   Call,
   VideoDeviceInfo,
 } from '@azure/communication-calling';
-import { CallAdapter, CallAdapterState } from '@azure/communication-react';
+import type { CallAdapter, CallAdapterState } from '@azure/communication-react';
 import produce from 'immer';
 
 export class FakeCallAdapter implements CallAdapter {

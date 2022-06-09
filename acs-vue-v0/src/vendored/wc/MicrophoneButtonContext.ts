@@ -1,4 +1,4 @@
-import { CallAdapterState } from '@azure/communication-react';
+import type { CallAdapterState } from '@azure/communication-react';
 import * as reselect from 'reselect';
 
 export interface AcsMicrophoneState {

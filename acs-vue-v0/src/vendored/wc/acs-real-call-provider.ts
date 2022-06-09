@@ -1,4 +1,4 @@
-import { CallAdapter } from '@azure/communication-react';
+import type { CallAdapter } from '@azure/communication-react';
 import { customElement, html, observable } from '@microsoft/fast-element';
 import { AcsRealCallContext } from './AcsRealCallContext.js';
 import { BaseCallProvider } from './BaseCallProvider.js';

@@ -1,6 +1,6 @@
 import { FASTElement } from '@microsoft/fast-element';
-import { AcsCallContext } from './AcsCallProvider.js';
-import {
+import type { AcsCallContext } from './AcsCallProvider.js';
+import type {
   ProviderRegisterEventDetail,
   ProviderUnregisterEventDetail,
 } from './events.js';

@@ -1,14 +1,14 @@
 /* eslint-disable max-classes-per-file */
 import { customElement, html, when } from '@microsoft/fast-element';
-import { AcsCallContext } from './AcsCallProvider.js';
+import type{ AcsCallContext } from './AcsCallProvider.js';
 import { BaseComponent } from './BaseComponent.js';
-import {
+import type {
   AcsMicrophoneButtonContext,
   AcsMicrophoneHandlers,
   AcsMicrophoneState,
   MicrophoneButtonSelector,
-  microphoneButtonSelector,
 } from './MicrophoneButtonContext.js';
+import { microphoneButtonSelector } from './MicrophoneButtonContext.js';
 
 const uncheckedSlot = html<AcsMicrophoneButton>`
   <slot name="unchecked"> ${x => x.strings.onLabel} </slot>

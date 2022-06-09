@@ -1,6 +1,6 @@
-import { CallAdapterState } from '@azure/communication-react';
+import type { CallAdapterState } from '@azure/communication-react';
 import { customElement, html } from '@microsoft/fast-element';
-import { AcsCallContext } from './AcsCallProvider.js';
+import type { AcsCallContext } from './AcsCallProvider.js';
 import { BaseCallProvider } from './BaseCallProvider.js';
 import { FakeCallAdapter } from './FakeCallAdapter.js';
 

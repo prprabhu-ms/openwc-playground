@@ -1,4 +1,4 @@
-import { AcsCallContext } from './AcsCallProvider.js';
+import type { AcsCallContext } from './AcsCallProvider.js';
 
 export interface ProviderRegisterEventDetail {
   contextChanged: (c?: AcsCallContext) => void;
