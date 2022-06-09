@@ -9,6 +9,7 @@ These explorations were intended to
 These explorations are not meant for consumption (in any sense of the word). There is a little bit of explanation with each, more to jog the memory for later reference.
 
 - [acs-v0](./acs-v0/README.md): A PoC implementation of a microphone button that brings together several architectural decisions in the other explorations.
+- [acs-vue-v0](./acs-vue-v0/README.md): A Vue wrapper and related explorations for [acs-v0](./acs-v0/README.md).
 - An exploration of how templates behave in [LitElement](./prprabhu-pg/README.md) and [FASTElement](./prprabhu-fast/README.md). Performance implications, especially compared to [React](./component-updates/README.md).
 - [wc101](./wc101/README.md) was used for a web components 101 session.
 - [prprabhu-providers](./prprabhu-providers/README.md) explores some ways to connect components to backend services.

@@ -14,6 +14,8 @@
     "@azure/communication-chat": "1.2.0",
     "@azure/communication-common": "2.0.0",
     "@azure/communication-react": "1.2.0",
+    "@microsoft/fast-components": "2.28.0",
+    "@microsoft/fast-element": "^1.9.0",
     "react": "16.14.0",
     "react-dom": "16.13.1",
     "vue": "^3.2.36"
