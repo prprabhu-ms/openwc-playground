@@ -1,6 +1,10 @@
+<script setup lang="ts">
+import Composite from './components/Composite.vue';
+</script>
+
 <template>
   <div class="composite">
-    The composite will go here.
+    <Composite/>
   </div>
   <div class="vue-v0">
     The vue button(s) will go here.
