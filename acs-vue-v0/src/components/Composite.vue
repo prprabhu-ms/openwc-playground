@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import '../vendored/callComposite';
 import { TOKEN, USER_ID, GROUP_ID, DISPLAY_NAME } from '../Secrets';
 import type { CallAdapter } from '@azure/communication-react';
+
+const root = ref<HTMLDivElement | null>(null);
 
 onMounted(() => {
   const callComposite = (window as any).callComposite;
@@ -22,15 +24,20 @@ onMounted(() => {
       window.addEventListener('beforeunload', () => {
         adapter.dispose();
       })
+      root.value?.dispatchEvent(new CustomEvent('adaptercreated', {
+        bubbles: true,
+        detail: {
+          adapter
+        }
+      }));
     })();
-
   }
 });
 
 </script>
 
 <template>
-  <div id="call-composite" style="height: 100%; width: 100%">
+  <div ref="root" id="call-composite" style="height: 100%; width: 100%">
     Loading...
   </div>
 </template>

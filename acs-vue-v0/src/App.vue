@@ -1,13 +1,25 @@
 <script setup lang="ts">
+import type { CallAdapter } from '@azure/communication-react';
+import { provide, shallowRef } from 'vue';
 import Composite from './components/Composite.vue';
+import ControlBar from './components/ControlBar.vue';
+import { adapterKey } from './keys';
+
+const adapter = shallowRef<CallAdapter | null>(null);
+provide(adapterKey, adapter);
+
+function onAdapterCreated (event: CustomEvent): void {
+  adapter.value = event.detail.adapter;
+};
+
 </script>
 
 <template>
   <div class="composite">
-    <Composite/>
+    <Composite @adaptercreated="onAdapterCreated"/>
   </div>
   <div class="vue-v0">
-    The vue button(s) will go here.
+    <ControlBar />
   </div>
 </template>
 
