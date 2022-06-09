@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import type { CallAdapter } from '@azure/communication-react';
+import type { CallAdapterState, CallAdapter } from '@azure/communication-react';
 import { provide, shallowRef } from 'vue';
 import Composite from './components/Composite.vue';
 import ControlBar from './components/ControlBar.vue';
-import { adapterKey } from './keys';
+import { adapterKey, stateKey } from './keys';
 
 const adapter = shallowRef<CallAdapter | null>(null);
 provide(adapterKey, adapter);
+const state = shallowRef<CallAdapterState | null>(null);
+provide(stateKey, state);
 
 function onAdapterCreated (event: CustomEvent): void {
   adapter.value = event.detail.adapter;
+  state.value = adapter.value?.getState() ?? null;
+  adapter.value?.onStateChange((value) => state.value = value);
 };
 
 </script>
