@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { fastButton, provideFASTDesignSystem } from "@microsoft/fast-components";
 import { onMounted } from "vue";
-import "../vendored/wc/acs-microphone-button";
+import "../vendored/acs-v0";
 
 // Perhaps this needs to happen sooner?
 provideFASTDesignSystem().register(fastButton());

@@ -11,7 +11,7 @@
     "./acs-v0.js": "./dist/src/acs-v0.js"
   },
   "scripts": {
-    "analyze": "cem analyze --litelement",
+    "analyze": "echo skipped",
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"node ./esbuild/watch.mjs\" \"wds\"",
     "build": "tsc && node ./esbuild/build.mjs && npm run analyze -- --exclude dist",
     "prepublish": "tsc && npm run analyze -- --exclude dist",

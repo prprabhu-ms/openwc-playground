@@ -2,7 +2,7 @@
 import { adapterKey } from "@/keys";
 import type { CallAdapter } from "@azure/communication-react";
 import { inject, onMounted, shallowRef, type ShallowRef } from "vue";
-import "../vendored/wc/acs-real-call-provider";
+import "../vendored/acs-v0";
 
 const adapter = inject<ShallowRef<CallAdapter | null>>(adapterKey, shallowRef(null));
 
