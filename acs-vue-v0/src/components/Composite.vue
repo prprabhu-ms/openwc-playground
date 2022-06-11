@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import '../vendored/callComposite';
-import { TOKEN, USER_ID, GROUP_ID, DISPLAY_NAME } from '../Secrets';
+import { TOKEN, USER_ID, GROUP_ID, DISPLAY_NAME } from '../secrets';
 import type { CallAdapter } from '@azure/communication-react';
 
 const root = ref<HTMLDivElement | null>(null);
