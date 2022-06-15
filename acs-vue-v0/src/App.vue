@@ -5,6 +5,7 @@ import Composite from './components/Composite.vue';
 import ControlBar from './components/ControlBar.vue';
 import { adapterKey, stateKey } from './keys';
 
+
 const adapter = shallowRef<CallAdapter | null>(null);
 provide(adapterKey, adapter);
 const state = shallowRef<CallAdapterState | null>(null);
@@ -26,6 +27,7 @@ function onAdapterCreated (event: CustomEvent): void {
     <ControlBar />
   </div>
 </template>
+
 
 <style>
 @import './assets/base.css';

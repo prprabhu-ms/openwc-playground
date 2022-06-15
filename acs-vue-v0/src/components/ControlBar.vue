@@ -5,6 +5,7 @@ import { inject, shallowRef, type ShallowRef } from 'vue';
 import NativeMicrophoneButton from './NativeMicrophoneButton.vue';
 import WrappedProvider from './WrappedProvider.vue';
 import WrappedMicrophoneButton from './WrappedMicrophoneButton.vue';
+import WrappedMicrophoneButtonExplicitProps from './WrappedMicrophoneButtonExplicitProps.vue';
 
 const adapter = inject<ShallowRef<CallAdapter | null>>(adapterKey, shallowRef(null));
 </script>
@@ -25,6 +26,13 @@ const adapter = inject<ShallowRef<CallAdapter | null>>(adapterKey, shallowRef(nu
     <WrappedProvider>
       <WrappedMicrophoneButton />
     </WrappedProvider>
+  </div>
+
+  <div class="tb-title">
+    Web component, wrapped in Vue with <code>explicitprops</code>:
+  </div>
+  <div class="tb-button">
+    <WrappedMicrophoneButtonExplicitProps />
   </div>
 </div>
 <div v-else>
