@@ -11,26 +11,9 @@ import {
   repeat,
 } from '@microsoft/fast-element';
 import {provideFASTDesignSystem, fastButton} from '@microsoft/fast-components';
+import type { CustomEventMap } from './CustomAvatarEventAndSlot.types';
 
 provideFASTDesignSystem().register(fastButton());
-
-export interface UserJoinedEventDetail {
-  // Name of the dynamic slot that will be added for this user.
-  targetSlot: string;
-  // All data availble for this user.
-  data: {
-    userId: string;
-  };
-}
-
-export interface UserLeftEventDetail {
-  targetSlot: string;
-}
-
-export interface CustomEventMap {
-  userjoined: UserJoinedEventDetail;
-  userleft: UserLeftEventDetail;
-}
 
 const userIds = ['apple', 'banana', 'jackfruit', 'mango'];
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import CustomAvatarEventAndSlot from "./CustomAvatarEventAndSlot.vue";
-import type { UserJoinedEventDetail, UserLeftEventDetail } from './wc-custom-avatar-event-and-slot';
+import type { UserJoinedEventDetail, UserLeftEventDetail } from './CustomAvatarEventAndSlot.types';
 
 // icons from https://remixicon.com/
 const getAvatar = (userId: string) => {
