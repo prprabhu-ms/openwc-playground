@@ -5,7 +5,6 @@ import { inject, shallowRef, type ShallowRef } from 'vue';
 import NativeMicrophoneButton from './NativeMicrophoneButton.vue';
 import WrappedProvider from './WrappedProvider.vue';
 import WrappedMicrophoneButton from './WrappedMicrophoneButton.vue';
-import WrappedMicrophoneButtonExplicitProps from './WrappedMicrophoneButtonExplicitProps.vue';
 import { microphoneButtonSelector, type AcsMicrophoneHandlers, type AcsMicrophoneState } from '@/vendored/AcsV0Selectors';
 import { useProps } from './useProps';
 
@@ -37,7 +36,7 @@ const microphoneProps = useProps<AcsMicrophoneState, AcsMicrophoneHandlers>(micr
     Web component, wrapped in Vue with <code>explicitprops</code>:
   </div>
   <div class="tb-button">
-    <WrappedMicrophoneButtonExplicitProps v-bind="microphoneProps" />
+    <WrappedMicrophoneButton explicitprops v-bind="microphoneProps" />
   </div>
 </div>
 <div v-else>
