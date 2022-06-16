@@ -1,0 +1,24 @@
+<account-details
+  bankName="FAST WC Bank"
+  acNumber="{{ wcAcNumber }}"
+  acBalance="{{ wcAcBalance }}"
+>
+  <e-transfer
+    toAcNumber="{{ angularAcNumber }}"
+    (send)="receiveMoney($event)"
+  ></e-transfer>
+</account-details>
+
+<fast-divider style="margin: 1rem 0"></fast-divider>
+
+<account-details
+  bankName="Angular Bank"
+  acNumber="{{ angularAcNumber }}"
+  acBalance="{{ angularAcBalance }}"
+>
+  <e-transfer
+    toAcNumber="{{ wcAcNumber }}"
+    (send)="sendMoney($event)"
+  ></e-transfer>
+  <angular-notice></angular-notice>
+</account-details>
