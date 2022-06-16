@@ -5,18 +5,33 @@ import type { CallAdapter, CallAdapterState } from "@azure/communication-react";
 import { computed, inject, shallowRef, type ComputedRef, type ShallowRef } from "vue";
 import "../vendored/acs-v0";
 
-function microphoneState(): ComputedRef<AcsMicrophoneState | undefined> {
+/**
+ * Return intersect type of 2 types
+ *
+ * @public
+ */
+export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
+
+/**
+ * Return intersect properties of 2 types
+ *
+ * @public
+ */
+export type CommonProperties<A, B> = {
+  [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
+}[keyof A & keyof B];
+
+function useSelector<State>(selector: (state: CallAdapterState) => State): ComputedRef<State | undefined> {
     const state = inject<ShallowRef<CallAdapterState | undefined>>(stateKey, shallowRef(undefined));
-    return computed(() => state.value && microphoneButtonSelector(state.value));
+    return computed(() => state.value && selector(state.value));
 }
 
-function microphoneHandlers(): ShallowRef<AcsMicrophoneHandlers | undefined> {
-    const adapter = inject<ShallowRef<CallAdapter | undefined>>(adapterKey, shallowRef(undefined));
-    return adapter;
+function useHandlers<Handlers>(): ShallowRef<Common<CallAdapter, Handlers> | undefined> {
+    return inject<ShallowRef<CallAdapter | undefined>>(adapterKey, shallowRef(undefined));
 }
 
-const state = microphoneState();
-const handlers = microphoneHandlers();
+const state = useSelector(microphoneButtonSelector);
+const handlers = useHandlers<AcsMicrophoneHandlers>();
 
 </script>
 
