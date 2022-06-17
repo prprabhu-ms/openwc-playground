@@ -30,7 +30,7 @@ const template = html<CustomAvatarAndSlot>`
   <fast-button primary @click=${x => x.addUser()}> Add User </fast-button>
   <fast-button primary @click=${x => x.removeUser()}> Remove User </fast-button>
   ${html`<div>hello</div>`}
-
+  <slot>
   ${repeat(
     w => w.users,
     html`
@@ -44,7 +44,7 @@ const template = html<CustomAvatarAndSlot>`
         </div>
       `
   )}
-
+  </slot>
   <hr />
   
 `;

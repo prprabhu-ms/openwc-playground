@@ -5,8 +5,10 @@ import { UserItemReact } from './UserItem';
 export function WholeCollectionAsEvent() {
   const [users, setUsers] = useState<string[]>([]);
   return (
-    <CustomAvatarAndSlotReact users={['banana']} onUsersChanged={(e) => {setUsers(e.detail.users)}} >
-
+    <CustomAvatarAndSlotReact users={users} onUsersChanged={(e) => {setUsers(e.detail.users)}} >
+      {
+        users.map(u => <UserItemReact key={u} user={u}>👍</UserItemReact>)
+      }
     </CustomAvatarAndSlotReact>
   );
 }
