@@ -4,6 +4,7 @@ import {
   customElement,
   FASTElement,
   html,
+  observable,
 } from '@microsoft/fast-element';
 
 const template = html<AccountDetails>`
@@ -23,7 +24,10 @@ const template = html<AccountDetails>`
         <td>$${(x) => x.acBalance}</td>
       </tr>
     </table>
-    <slot></slot>
+    <slot name="features"></slot>
+    <slot name="disclaimer"></slot>
+
+    <p>${(x) => JSON.stringify(x.mailingAddress)}</p>
   </div>
 `;
 
@@ -46,4 +50,5 @@ export class AccountDetails extends FASTElement {
   @attr bankName: string = 'FAST WC Bank';
   @attr acNumber: string = '';
   @attr acBalance: number = 0.0;
+  @observable mailingAddress?: any;
 }

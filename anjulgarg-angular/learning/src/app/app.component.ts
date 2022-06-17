@@ -37,6 +37,19 @@ export class AppComponent {
   wcAcNumber = 'WC4510087';
   wcAcBalance = 523.87;
 
+  mailingAddress = {
+    name: 'John Doe',
+    address: '123 Main St',
+    city: 'Vancouver',
+    province: 'BC',
+    postalCode: 'V6B 1A1',
+    country: 'Canada',
+    phone: '778-555-1212',
+    someFunc: () => {
+      console.log('SOME FUNC');
+    }
+  };
+
   receiveMoney(event: Event) {
     const amount = (event as CustomEvent).detail.amount;
     console.log(amount, 'Received via Angular');
@@ -52,7 +65,4 @@ export class AppComponent {
   }
 }
 
-
 // @TODO Styling
-// @TODO Pass complex data structure to WC
-// @TODO Named slots

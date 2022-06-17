@@ -4,6 +4,7 @@
   acBalance="{{ wcAcBalance }}"
 >
   <e-transfer
+    slot="features"
     toAcNumber="{{ angularAcNumber }}"
     (send)="receiveMoney($event)"
   ></e-transfer>
@@ -15,10 +16,13 @@
   bankName="Angular Bank"
   acNumber="{{ angularAcNumber }}"
   acBalance="{{ angularAcBalance }}"
+  [mailingAddress]="mailingAddress"
 >
   <e-transfer
+    slot="features"
     toAcNumber="{{ wcAcNumber }}"
     (send)="sendMoney($event)"
   ></e-transfer>
-  <angular-notice></angular-notice>
+  <angular-notice slot="disclaimer"></angular-notice>
 </account-details>
+
