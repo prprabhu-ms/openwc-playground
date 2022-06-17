@@ -5,9 +5,8 @@ This project contains an exploration of Vue wrapper for the [PoC implementation]
 Explorations included:
 
 - Native Vue implementation
-- TODO: Wrapper of web-component implementation
-- TODO: Wrapper of web-component implementation, with `explicitprops`
-- TODO: A Vue implementation of the web-component
+- Wrapper of web-component implementation
+- Wrapper of web-component implementation, with `explicitprops`
 
 ## Customize configuration
 

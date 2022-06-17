@@ -12,6 +12,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@microsoft/fast-components": "2.28.0",
     "@microsoft/fast-element": "^1.9.0",
     "vue": "^3.2.36"
   },
