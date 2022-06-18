@@ -23,7 +23,6 @@ const data: { avatars: {[index: string]: string} } = reactive({ avatars: {}});
 
 function onUserJoined(ev: CustomEvent<UserJoinedEventDetail>): void {
     data.avatars[ev.detail.targetSlot] = getAvatar(ev.detail.data.userId);
-    console.log(data.avatars);
 }
 
 function onUserLeft(ev: CustomEvent<UserLeftEventDetail>): void {
@@ -35,12 +34,8 @@ function onUserLeft(ev: CustomEvent<UserLeftEventDetail>): void {
 <template>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <CustomAvatarEventAndSlot @userjoined="onUserJoined" @userleft="onUserLeft">
-        <!--
-            Note that this sets the native `slot` attribute, not `v-slot`.
-
-            This is a bit of a bummer because not only is there no TypeScript support,
-            Looking at the Vue wrapper doesn't tell users what slots exist.
-        -->
-        <i v-for="(avatar, target) in data.avatars" :slot="target" :class="avatar"></i>
+        <template v-for="(avatar, target) in data.avatars" #[target]>
+            <i :class="avatar"></i>
+        </template>
     </CustomAvatarEventAndSlot>
 </template>
