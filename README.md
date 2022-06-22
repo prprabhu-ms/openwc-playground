@@ -17,4 +17,5 @@ These explorations are not meant for consumption (in any sense of the word). The
 - [x-focus](./x-focus/README.md) explores interaction of focus / tab order with custom elements.
 - [x-styles](./x-styles/README.md) explores styling custom elements.
 - [x-vue](./x-vue/README.md) explores specific interactions like styling and render injection for Vue wrappers of web components.
+- [react-wrapper](./react-wrapper/README.md) explores adding react wrappers to web component.
 - An exploration of how templates behave in [LitElement](./prprabhu-pg/README.md) and [FASTElement](./prprabhu-fast/README.md). Performance implications, especially compared to [React](./component-updates/README.md).
