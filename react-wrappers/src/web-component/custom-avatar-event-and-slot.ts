@@ -8,28 +8,22 @@ import {
   observable,
   repeat,
 } from '@microsoft/fast-element';
-import { FileSharingCardEventDetail, UserJoinedEventDetail, UserLeftEventDetail } from '../event';
+import {
+  fastButton,
+  provideFASTDesignSystem,
+} from '@microsoft/fast-components';
+
+import { FileSharingCardEventDetail, UserJoinedEventDetail, UserLeftEventDetail } from './event';
+
+
+provideFASTDesignSystem().register(fastButton());
 
 const userIds = ['apple', 'banana', 'jackfruit', 'mango'];
-
-export type SlotItemTypes = {
-  'user': string,
-  'user1': string[]
-}
-
-const createSlotRenderer = <ItemTypes>() => {
-  return <SlotName extends keyof ItemTypes>(slotName: SlotName, item: ItemTypes[SlotName]) => {
-
-  };
-}
-
-const renderSlot = createSlotRenderer<SlotItemTypes>();
-renderSlot('user1', []);
 
 const template = html<CustomAvatarAndSlot>`
   <fast-button primary @click=${x => x.addUser()}> Add User </fast-button>
   <fast-button primary @click=${x => x.removeUser()}> Remove User </fast-button>
-  ${html`<div>hello</div>`}
+  <slot name="single-slot"></slot>
   <slot>
   ${repeat(
     w => w.users,
@@ -64,24 +58,25 @@ const styles = css`
   }
 `;
 
-export interface CustomAvatarAndSlotProps {
-  users?: string[];
-  iconDefaultText?: string;
-}
 
-export interface CustomAvatarAndSlotEventMap {
-  userjoined?: UserJoinedEventDetail;
-  userleft: UserLeftEventDetail;
-  fileadded: FileSharingCardEventDetail;
-  usersChanged: userChangedDetail;
-}
-
-export interface userChangedDetail {
+export interface UserChangedDetail {
   users: string[],
   action: {
     name: 'joined' | 'left',
     targetUser: string
   }
+}
+
+export interface CustomAvatarAndSlotEventMap {
+  userjoined?: UserJoinedEventDetail;
+  userleft?: UserLeftEventDetail;
+  fileadded?: FileSharingCardEventDetail;
+  usersChanged?: UserChangedDetail;
+}
+
+export interface CustomAvatarAndSlotProps {
+  users?: string[];
+  iconDefaultText?: string;
 }
 
 @customElement({ name: 'custom-avatar-event-and-slot', template, styles })
@@ -135,3 +130,4 @@ export class CustomAvatarAndSlot extends FASTElement implements Required<CustomA
     this.$emit(type, detail);
   }
 }
+

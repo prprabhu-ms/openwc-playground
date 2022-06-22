@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { CustomAvatarAndSlotReact } from './CustomAvatarAndSlotReact';
+import { CustomAvatarAndSlotReact } from './wrappers/CustomAvatarAndSlotReact';
 
 
 export function SingleElementEvent() {
   const [children, setChildren] = useState<React.ReactElement[]>([]);
-  const onRender = () => {
-
-  }
   return (
     <CustomAvatarAndSlotReact
       onUserjoined={(e) => { setChildren((children) => [...(children ?? []), <div key={e.detail?.data.userId}>{e.detail?.data.userId}</div>]) }}

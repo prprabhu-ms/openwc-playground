@@ -13,6 +13,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@microsoft/fast-components": "^2.30.6",
     "@microsoft/fast-element": "^1.10.2",
     "@microsoft/fast-react-wrapper": "^0.3.9",
     "@testing-library/jest-dom": "^5.11.4",
@@ -27,14 +28,9 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "storybook": "tsc && start-storybook -p 6006",
     "build:tsc": "tsc",
-    "build-storybook": "build-storybook",
-    "init-msw": "msw init public/"
+    "build-storybook": "build-storybook"
   },
   "eslintConfig": {
     "extends": [

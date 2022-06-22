@@ -7,11 +7,6 @@ import {
   html,
 } from '@microsoft/fast-element';
 
-export type SlotItemTypes = {
-  'user': string,
-  'user1': string[]
-}
-
 const template = html<UserItem>`
     <div id="user">
       <div id="username">${x => x.user}</div>
